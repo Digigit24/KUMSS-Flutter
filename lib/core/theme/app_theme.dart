@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 import 'app_spacing.dart';
 
@@ -12,7 +13,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
-      fontFamily: 'Inter',
+      fontFamily: GoogleFonts.inter().fontFamily,
 
       // ─── Color Scheme ──────────────────────────────────────
       colorScheme: const ColorScheme.light(
@@ -78,7 +79,7 @@ class AppTheme {
             borderRadius: AppSpacing.borderRadiusMd,
           ),
           textStyle: const TextStyle(
-            fontFamily: 'Inter',
+
             fontSize: 14,
             fontWeight: FontWeight.w500,
           ),
@@ -97,7 +98,7 @@ class AppTheme {
           ),
           side: const BorderSide(color: AppColors.border),
           textStyle: const TextStyle(
-            fontFamily: 'Inter',
+
             fontSize: 14,
             fontWeight: FontWeight.w500,
           ),
@@ -114,7 +115,7 @@ class AppTheme {
             borderRadius: AppSpacing.borderRadiusMd,
           ),
           textStyle: const TextStyle(
-            fontFamily: 'Inter',
+
             fontSize: 14,
             fontWeight: FontWeight.w500,
           ),
