@@ -158,22 +158,40 @@ class _AppDataTableState extends State<AppDataTable> {
   }
 
   Widget _buildTable() {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-          minWidth: 600,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildHeaderRow(),
-            ...widget.rows.asMap().entries.map(
-                  (entry) => _buildDataRow(entry.value, entry.key),
-                ),
-          ],
-        ),
-      ),
+    // Calculate total fixed width from columns
+    double totalFixed = 0;
+    int flexCount = 0;
+    for (final col in widget.columns) {
+      if (col.width != null) {
+        totalFixed += col.width!;
+      } else {
+        flexCount++;
+      }
+    }
+    // Ensure minimum width for flex columns (100px each) + fixed + padding
+    final minTableWidth = totalFixed + (flexCount * 100) + 32;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final tableWidth =
+            constraints.maxWidth > minTableWidth ? constraints.maxWidth : minTableWidth;
+
+        return SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: SizedBox(
+            width: tableWidth,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _buildHeaderRow(),
+                ...widget.rows.asMap().entries.map(
+                      (entry) => _buildDataRow(entry.value, entry.key),
+                    ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
