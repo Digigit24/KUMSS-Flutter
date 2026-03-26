@@ -19,10 +19,6 @@ class DeductionsScreen extends StatelessWidget {
     final deductions = [
       ['Provident Fund (PF)', 'Percentage', '12%', 'All Employees', true],
       ['Professional Tax', 'Fixed', '\u20B9200/month', 'All Employees', true],
-      ['TDS', 'Percentage', 'As per slab', 'All Employees', true],
-      ['ESI', 'Percentage', '0.75%', 'Below \u20B921,000', true],
-      ['Loan Recovery', 'Fixed', 'Variable', 'Selected Staff', true],
-      ['Insurance Premium', 'Fixed', '\u20B9500/month', 'Opted-in Staff', false],
     ];
 
     return SingleChildScrollView(

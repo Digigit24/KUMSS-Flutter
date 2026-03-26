@@ -86,8 +86,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onCheck(
       AuthCheckRequested event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
-    // For demo purposes, go to unauthenticated
-    await Future.delayed(const Duration(milliseconds: 500));
-    emit(AuthUnauthenticated());
+    // Auto-authenticate with demo super admin for UI preview
+    await Future.delayed(const Duration(milliseconds: 300));
+    emit(AuthAuthenticated(user: UserModel.demoSuperAdmin));
   }
 }

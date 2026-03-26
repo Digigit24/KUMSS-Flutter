@@ -8,11 +8,8 @@ class EventsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final events = [
-      _Event('Annual Sports Day', 'Apr 12, 2026', 'All Day', 'All Colleges', 2500, AppColors.success, Icons.sports_rounded),
-      _Event('Tech Fest 2026', 'Apr 20-22, 2026', '3 Days', 'Engineering', 1200, AppColors.accent, Icons.code_rounded),
-      _Event('Cultural Night', 'May 5, 2026', 'Evening', 'All Colleges', 3000, AppColors.secondary, Icons.music_note_rounded),
-      _Event('Guest Lecture - AI', 'Mar 30, 2026', '2:00 PM', 'Engineering', 200, AppColors.info, Icons.school_rounded),
-      _Event('Blood Donation Camp', 'Apr 8, 2026', '10AM-4PM', 'Medicine', 500, AppColors.error, Icons.favorite_rounded),
+      _Event('Annual Sports Day', 'Apr 12, 2026', 'All Day', 'All Colleges', 450, AppColors.success, Icons.sports_rounded),
+      _Event('Guest Lecture - AI in Medicine', 'Mar 30, 2026', '2:00 PM', 'Medicine', 120, AppColors.info, Icons.school_rounded),
     ];
 
     return SingleChildScrollView(

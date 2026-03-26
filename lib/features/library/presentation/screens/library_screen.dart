@@ -19,11 +19,7 @@ class LibraryScreen extends StatelessWidget {
 
     final books = [
       ['Introduction to Algorithms', 'Cormen et al.', '978-0262033848', 'Computer Science', '15', '3'],
-      ['Gray\'s Anatomy', 'Henry Gray', '978-0702052309', 'Medicine', '10', '2'],
-      ['Principles of Economics', 'N.G. Mankiw', '978-1305585126', 'Economics', '12', '5'],
-      ['Indian Constitutional Law', 'M.P. Jain', '978-9389391534', 'Law', '8', '4'],
-      ['Fundamentals of Physics', 'Halliday & Resnick', '978-1118230718', 'Physics', '20', '8'],
-      ['Organic Chemistry', 'Morrison & Boyd', '978-9332519046', 'Chemistry', '10', '0'],
+      ['Gray\'s Anatomy', 'Henry Gray', '978-0702052309', 'Medicine', '10', '0'],
     ];
 
     return SingleChildScrollView(
@@ -42,13 +38,13 @@ class LibraryScreen extends StatelessWidget {
           ),
           Row(
             children: [
-              Expanded(child: MetricCard(label: 'Total Books', value: '24,580', icon: Icons.menu_book_rounded, iconColor: AppColors.accent, iconBgColor: AppColors.accentSurface)),
+              Expanded(child: MetricCard(label: 'Total Books', value: '4,580', icon: Icons.menu_book_rounded, iconColor: AppColors.accent, iconBgColor: AppColors.accentSurface)),
               const SizedBox(width: 16),
-              Expanded(child: MetricCard(label: 'Issued', value: '1,240', icon: Icons.bookmark_rounded, iconColor: AppColors.success, iconBgColor: AppColors.successSurface)),
+              Expanded(child: MetricCard(label: 'Issued', value: '240', icon: Icons.bookmark_rounded, iconColor: AppColors.success, iconBgColor: AppColors.successSurface)),
               const SizedBox(width: 16),
-              Expanded(child: MetricCard(label: 'Overdue', value: '48', icon: Icons.warning_rounded, iconColor: AppColors.error, iconBgColor: AppColors.errorSurface)),
+              Expanded(child: MetricCard(label: 'Overdue', value: '12', icon: Icons.warning_rounded, iconColor: AppColors.error, iconBgColor: AppColors.errorSurface)),
               const SizedBox(width: 16),
-              Expanded(child: MetricCard(label: 'Fines Collected', value: '\u20B912,400', icon: Icons.payments_rounded, iconColor: AppColors.secondary, iconBgColor: AppColors.secondarySurface)),
+              Expanded(child: MetricCard(label: 'Fines Collected', value: '\u20B93,200', icon: Icons.payments_rounded, iconColor: AppColors.secondary, iconBgColor: AppColors.secondarySurface)),
             ],
           ),
           const SizedBox(height: 24),

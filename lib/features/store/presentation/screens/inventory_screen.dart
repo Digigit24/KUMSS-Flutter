@@ -19,12 +19,7 @@ class InventoryScreen extends StatelessWidget {
 
     final items = [
       ['Dell Optiplex 7090', 'Electronics', 'Central', '42', '10', '\u20B955,000', 'ok'],
-      ['A4 Paper (Ream)', 'Stationery', 'Engineering', '250', '100', '\u20B9280', 'ok'],
-      ['Lab Coat', 'Apparel', 'Medicine', '15', '50', '\u20B9450', 'low'],
-      ['Projector Lamp', 'Electronics', 'Central', '5', '10', '\u20B98,500', 'low'],
-      ['Whiteboard Marker', 'Stationery', 'Business', '500', '200', '\u20B945', 'ok'],
-      ['Chemical Reagent Kit', 'Lab', 'Science', '8', '20', '\u20B92,200', 'critical'],
-      ['Desk (Standard)', 'Furniture', 'Law', '120', '50', '\u20B93,800', 'ok'],
+      ['Chemical Reagent Kit', 'Lab Supplies', 'Medicine', '8', '20', '\u20B92,200', 'critical'],
     ];
 
     return SingleChildScrollView(

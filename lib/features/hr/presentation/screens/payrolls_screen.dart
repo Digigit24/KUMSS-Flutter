@@ -18,10 +18,8 @@ class PayrollsScreen extends StatelessWidget {
     ];
 
     final payrolls = [
-      ['March 2026 - All Staff', 'Mar 2026', '526', '\u20B91,85,00,000', '\u20B91,52,00,000', 'draft'],
-      ['February 2026 - All Staff', 'Feb 2026', '524', '\u20B91,82,00,000', '\u20B91,49,00,000', 'processed'],
-      ['January 2026 - All Staff', 'Jan 2026', '520', '\u20B91,80,00,000', '\u20B91,48,00,000', 'completed'],
-      ['December 2025 - All Staff', 'Dec 2025', '518', '\u20B91,78,00,000', '\u20B91,46,00,000', 'completed'],
+      ['March 2026 - All Staff', 'Mar 2026', '156', '\u20B948,50,000', '\u20B939,20,000', 'draft'],
+      ['February 2026 - All Staff', 'Feb 2026', '156', '\u20B948,00,000', '\u20B938,80,000', 'completed'],
     ];
 
     return SingleChildScrollView(

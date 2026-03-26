@@ -17,13 +17,8 @@ class TransactionsScreen extends StatelessWidget {
     ];
 
     final transactions = [
-      ['Fee Payment - Ravi Kumar', 'Income', 'Engineering', '\u20B945,000', 'Mar 25, 2026', 'completed'],
-      ['Salary - March 2026', 'Expense', 'All', '\u20B918,50,000', 'Mar 25, 2026', 'pending'],
-      ['Lab Equipment Purchase', 'Expense', 'Medicine', '\u20B92,50,000', 'Mar 24, 2026', 'completed'],
-      ['Fee Payment - Anita S.', 'Income', 'Business', '\u20B938,000', 'Mar 24, 2026', 'completed'],
-      ['Utility Bills - March', 'Expense', 'All', '\u20B91,20,000', 'Mar 23, 2026', 'completed'],
-      ['Library Fines', 'Income', 'Law', '\u20B92,400', 'Mar 23, 2026', 'completed'],
-      ['Hostel Fee - Batch 2025', 'Income', 'Engineering', '\u20B93,40,000', 'Mar 22, 2026', 'completed'],
+      ['Fee Payment - Abebe Kebede', 'Income', 'Engineering', '\u20B945,000', 'Mar 25, 2026', 'completed'],
+      ['Lab Equipment Purchase', 'Expense', 'Medicine', '\u20B92,50,000', 'Mar 24, 2026', 'pending'],
     ];
 
     return SingleChildScrollView(

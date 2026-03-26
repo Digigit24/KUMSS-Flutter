@@ -20,9 +20,6 @@ class College {
   static List<College> get demoColleges => const [
         College(id: 1, name: 'College of Engineering', code: 'COE', shortName: 'Engineering'),
         College(id: 2, name: 'College of Medicine', code: 'COM', shortName: 'Medicine'),
-        College(id: 3, name: 'College of Business', code: 'COB', shortName: 'Business'),
-        College(id: 4, name: 'College of Law', code: 'COL', shortName: 'Law'),
-        College(id: 5, name: 'College of Science', code: 'COS', shortName: 'Science'),
       ];
 }
 

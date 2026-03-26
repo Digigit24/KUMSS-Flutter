@@ -37,12 +37,8 @@ class DrilldownScreen extends StatelessWidget {
           ),
           // Drill-down cards
           ...[
-            _DrillItem('Tuition Fee', '\u20B91,85,00,000', '\u20B91,62,00,000', 87.6, 820),
-            _DrillItem('Hostel Fee', '\u20B948,00,000', '\u20B942,50,000', 88.5, 420),
-            _DrillItem('Lab Fee', '\u20B924,00,000', '\u20B922,80,000', 95.0, 640),
-            _DrillItem('Transport Fee', '\u20B912,00,000', '\u20B99,60,000', 80.0, 320),
-            _DrillItem('Library Fee', '\u20B96,00,000', '\u20B95,70,000', 95.0, 820),
-            _DrillItem('Examination Fee', '\u20B918,00,000', '\u20B916,20,000', 90.0, 820),
+            _DrillItem('Tuition Fee', '\u20B945,00,000', '\u20B939,42,000', 87.6, 620),
+            _DrillItem('Lab Fee', '\u20B96,00,000', '\u20B95,70,000', 95.0, 620),
           ].map((item) => _buildDrillCard(item)),
         ],
       ),

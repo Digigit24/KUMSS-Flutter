@@ -18,10 +18,7 @@ class ExpensesScreen extends StatelessWidget {
 
     final expenses = [
       ['Office Supplies Purchase', 'Administrative', 'Engineering', '\u20B915,400', 'Mar 25, 2026'],
-      ['Vehicle Maintenance', 'Transport', 'Central', '\u20B928,000', 'Mar 24, 2026'],
-      ['Campus Cleaning Service', 'Maintenance', 'All', '\u20B945,000', 'Mar 23, 2026'],
       ['Internet Bill - March', 'Utilities', 'All', '\u20B91,20,000', 'Mar 22, 2026'],
-      ['Guest Lecturer Honorarium', 'Academic', 'Medicine', '\u20B925,000', 'Mar 21, 2026'],
     ];
 
     return SingleChildScrollView(

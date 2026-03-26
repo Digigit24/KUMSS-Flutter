@@ -35,11 +35,8 @@ class IncomeDashboardScreen extends StatelessWidget {
             subtitle: 'Revenue breakdown by college',
             child: Column(
               children: [
-                _buildIncomeRow('Engineering', '\u20B91.2Cr', '\u20B91.05Cr', 87.5),
-                _buildIncomeRow('Medicine', '\u20B998L', '\u20B988L', 89.8),
-                _buildIncomeRow('Business', '\u20B985L', '\u20B974L', 87.1),
-                _buildIncomeRow('Law', '\u20B952L', '\u20B945L', 86.5),
-                _buildIncomeRow('Science', '\u20B965L', '\u20B958L', 89.2),
+                _buildIncomeRow('Engineering', '\u20B995L', '\u20B983L', 87.5),
+                _buildIncomeRow('Medicine', '\u20B985L', '\u20B976L', 89.8),
               ],
             ),
           ),

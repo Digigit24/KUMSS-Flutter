@@ -8,12 +8,8 @@ class SalaryStructuresScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final structures = [
-      _Structure('Professor Grade', '\u20B91,20,000', '\u20B91,50,000', 45, true),
-      _Structure('Associate Professor', '\u20B985,000', '\u20B91,10,000', 82, true),
-      _Structure('Assistant Professor', '\u20B960,000', '\u20B980,000', 156, true),
-      _Structure('Administrative Staff', '\u20B935,000', '\u20B950,000', 120, true),
-      _Structure('Support Staff', '\u20B920,000', '\u20B930,000', 85, true),
-      _Structure('Contract Faculty', '\u20B940,000', '\u20B955,000', 38, false),
+      _Structure('Professor Grade', '\u20B91,20,000', '\u20B91,50,000', 28, true),
+      _Structure('Administrative Staff', '\u20B935,000', '\u20B950,000', 45, true),
     ];
 
     return SingleChildScrollView(

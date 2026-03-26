@@ -18,10 +18,7 @@ class NoticesScreen extends StatelessWidget {
 
     final notices = [
       ['Exam Schedule for April 2026', 'Mar 25, 2026', 'All Students', 'high', 'Published'],
-      ['Fee Payment Deadline Extended', 'Mar 23, 2026', 'All', 'urgent', 'Published'],
-      ['Campus Wi-Fi Maintenance', 'Mar 22, 2026', 'All', 'medium', 'Published'],
-      ['Library Extended Hours', 'Mar 20, 2026', 'All Students', 'low', 'Draft'],
-      ['Summer Internship Opportunities', 'Mar 18, 2026', 'Engineering', 'medium', 'Published'],
+      ['Fee Payment Deadline Extended', 'Mar 23, 2026', 'All', 'urgent', 'Draft'],
     ];
 
     return SingleChildScrollView(

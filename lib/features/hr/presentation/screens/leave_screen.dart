@@ -18,12 +18,8 @@ class LeaveScreen extends StatelessWidget {
     ];
 
     final leaves = [
-      ['Dr. Rahul Sharma', 'Sick Leave', 'Mar 26', 'Mar 27', '2', 'pending'],
-      ['Priya Patel', 'Casual Leave', 'Mar 28', 'Mar 28', '1', 'pending'],
-      ['Amit Kumar', 'Earned Leave', 'Apr 1', 'Apr 5', '5', 'pending'],
-      ['Dr. Maya Devi', 'Sick Leave', 'Mar 20', 'Mar 21', '2', 'approved'],
-      ['Vikram Joshi', 'Casual Leave', 'Mar 18', 'Mar 18', '1', 'approved'],
-      ['Rajesh Singh', 'Earned Leave', 'Mar 15', 'Mar 20', '6', 'rejected'],
+      ['Dr. Abebe Kebede', 'Sick Leave', 'Mar 26', 'Mar 27', '2', 'pending'],
+      ['Fatima Hassan', 'Earned Leave', 'Apr 1', 'Apr 5', '5', 'approved'],
     ];
 
     return SingleChildScrollView(

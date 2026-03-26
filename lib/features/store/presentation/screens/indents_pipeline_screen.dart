@@ -8,12 +8,12 @@ class IndentsPipelineScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final stages = [
-      _Stage('Draft', AppColors.textTertiary, ['IND-2855', 'IND-2856']),
-      _Stage('Submitted', AppColors.info, ['IND-2852', 'IND-2853', 'IND-2854']),
-      _Stage('College Approved', AppColors.accent, ['IND-2849', 'IND-2851']),
-      _Stage('CEO Pending', AppColors.warning, ['IND-2847', 'IND-2845']),
-      _Stage('Approved', AppColors.success, ['IND-2840', 'IND-2838', 'IND-2835']),
-      _Stage('Procured', AppColors.primary, ['IND-2830']),
+      _Stage('Draft', AppColors.textTertiary, ['IND-1026']),
+      _Stage('Submitted', AppColors.info, ['IND-1025']),
+      _Stage('College Approved', AppColors.accent, ['IND-1024']),
+      _Stage('CEO Pending', AppColors.warning, ['IND-1023']),
+      _Stage('Approved', AppColors.success, ['IND-1020']),
+      _Stage('Procured', AppColors.primary, ['IND-1018']),
     ];
 
     return SingleChildScrollView(

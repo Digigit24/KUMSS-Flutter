@@ -8,11 +8,8 @@ class HostelScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hostels = [
-      _Hostel('Boys Hostel A', 'Engineering', 200, 185, 'Mr. R. Verma', AppColors.accent),
-      _Hostel('Boys Hostel B', 'Engineering', 150, 142, 'Mr. S. Kumar', AppColors.info),
-      _Hostel('Girls Hostel A', 'Medicine', 180, 175, 'Mrs. P. Sharma', AppColors.success),
-      _Hostel('Girls Hostel B', 'Business', 120, 98, 'Mrs. D. Nair', AppColors.secondary),
-      _Hostel('PG Hostel', 'Science', 80, 65, 'Mr. A. Rao', AppColors.primary),
+      _Hostel('Boys Hostel A', 'Engineering', 200, 185, 'Mr. Dawit Getachew', AppColors.accent),
+      _Hostel('Girls Hostel A', 'Medicine', 180, 175, 'Mrs. Hiwot Tesfaye', AppColors.success),
     ];
 
     return SingleChildScrollView(
@@ -28,13 +25,13 @@ class HostelScreen extends StatelessWidget {
           ),
           Row(
             children: [
-              Expanded(child: MetricCard(label: 'Total Rooms', value: '730', icon: Icons.hotel_rounded, iconColor: AppColors.accent, iconBgColor: AppColors.accentSurface)),
+              Expanded(child: MetricCard(label: 'Total Rooms', value: '380', icon: Icons.hotel_rounded, iconColor: AppColors.accent, iconBgColor: AppColors.accentSurface)),
               const SizedBox(width: 16),
-              Expanded(child: MetricCard(label: 'Occupied', value: '665', icon: Icons.bed_rounded, iconColor: AppColors.success, iconBgColor: AppColors.successSurface, trend: '91%', trendUp: true)),
+              Expanded(child: MetricCard(label: 'Occupied', value: '360', icon: Icons.bed_rounded, iconColor: AppColors.success, iconBgColor: AppColors.successSurface, trend: '95%', trendUp: true)),
               const SizedBox(width: 16),
-              Expanded(child: MetricCard(label: 'Available', value: '65', icon: Icons.check_circle_rounded, iconColor: AppColors.info, iconBgColor: AppColors.infoSurface)),
+              Expanded(child: MetricCard(label: 'Available', value: '20', icon: Icons.check_circle_rounded, iconColor: AppColors.info, iconBgColor: AppColors.infoSurface)),
               const SizedBox(width: 16),
-              Expanded(child: MetricCard(label: 'Fee Collected', value: '\u20B942.5L', icon: Icons.account_balance_wallet_rounded, iconColor: AppColors.secondary, iconBgColor: AppColors.secondarySurface)),
+              Expanded(child: MetricCard(label: 'Fee Collected', value: '\u20B912.5L', icon: Icons.account_balance_wallet_rounded, iconColor: AppColors.secondary, iconBgColor: AppColors.secondarySurface)),
             ],
           ),
           const SizedBox(height: 24),

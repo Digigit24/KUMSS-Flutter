@@ -17,9 +17,8 @@ class AcademicYearsScreen extends StatelessWidget {
     ];
 
     final years = [
-      ['2025-26', 'Jul 1, 2025', 'Jun 30, 2026', '2', 'active'],
-      ['2024-25', 'Jul 1, 2024', 'Jun 30, 2025', '2', 'completed'],
-      ['2023-24', 'Jul 1, 2023', 'Jun 30, 2024', '2', 'completed'],
+      ['2025-26', 'Sep 1, 2025', 'Aug 31, 2026', '2', 'active'],
+      ['2024-25', 'Sep 1, 2024', 'Aug 31, 2025', '2', 'completed'],
     ];
 
     return SingleChildScrollView(

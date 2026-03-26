@@ -61,10 +61,8 @@ class BulkMessagesScreen extends StatelessWidget {
             title: 'Recent Messages',
             child: Column(
               children: [
-                _buildMessageItem('Exam Schedule Notification', 'All Students', 'Mar 25, 2026', 'Delivered', 12458),
-                _buildMessageItem('Fee Payment Reminder', 'Engineering', 'Mar 23, 2026', 'Delivered', 3240),
-                _buildMessageItem('Holiday Notice', 'All Staff', 'Mar 20, 2026', 'Delivered', 847),
-                _buildMessageItem('Event Invitation', 'All', 'Mar 18, 2026', 'Failed', 13305),
+                _buildMessageItem('Exam Schedule Notification', 'All Students', 'Mar 25, 2026', 'Delivered', 2340),
+                _buildMessageItem('Fee Payment Reminder', 'Engineering', 'Mar 23, 2026', 'Delivered', 1240),
               ],
             ),
           ),

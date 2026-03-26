@@ -16,14 +16,8 @@ class HolidaysScreen extends StatelessWidget {
     ];
 
     final holidays = [
-      ['Republic Day', 'Jan 26, 2026', 'Monday', 'National'],
-      ['Holi', 'Mar 10, 2026', 'Tuesday', 'Festival'],
-      ['Good Friday', 'Apr 3, 2026', 'Friday', 'Religious'],
-      ['May Day', 'May 1, 2026', 'Friday', 'National'],
-      ['Independence Day', 'Aug 15, 2026', 'Saturday', 'National'],
-      ['Gandhi Jayanti', 'Oct 2, 2026', 'Friday', 'National'],
-      ['Diwali', 'Oct 20, 2026', 'Tuesday', 'Festival'],
-      ['Christmas', 'Dec 25, 2026', 'Friday', 'Festival'],
+      ['Ethiopian New Year', 'Sep 11, 2026', 'Friday', 'National'],
+      ['Meskel', 'Sep 27, 2026', 'Sunday', 'Religious'],
     ];
 
     return SingleChildScrollView(

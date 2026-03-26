@@ -18,13 +18,7 @@ class ActivityLogsScreen extends StatelessWidget {
 
     final logs = [
       ['Created new student record', 'Super Admin', 'Students', 'Engineering', '192.168.1.100', 'Mar 26, 10:30 AM'],
-      ['Approved indent #2847', 'Super Admin', 'Store', 'Business', '192.168.1.100', 'Mar 26, 10:15 AM'],
-      ['Updated salary structure', 'Amit Kumar', 'HR', 'All', '192.168.1.105', 'Mar 26, 09:45 AM'],
-      ['Login successful', 'Dr. Rahul S.', 'Auth', 'Engineering', '192.168.1.112', 'Mar 26, 09:30 AM'],
-      ['Generated payroll', 'Super Admin', 'HR', 'All', '192.168.1.100', 'Mar 26, 09:00 AM'],
-      ['Modified timetable', 'Priya Patel', 'Academic', 'Medicine', '192.168.1.108', 'Mar 25, 05:30 PM'],
-      ['Rejected leave request', 'Super Admin', 'HR', 'Law', '192.168.1.100', 'Mar 25, 04:45 PM'],
-      ['System backup completed', 'System', 'Core', 'All', '127.0.0.1', 'Mar 25, 02:00 AM'],
+      ['Approved indent #1024', 'Super Admin', 'Store', 'Medicine', '192.168.1.100', 'Mar 26, 10:15 AM'],
     ];
 
     return SingleChildScrollView(

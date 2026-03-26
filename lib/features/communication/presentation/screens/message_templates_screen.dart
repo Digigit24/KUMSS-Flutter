@@ -10,10 +10,6 @@ class MessageTemplatesScreen extends StatelessWidget {
     final templates = [
       _Template('Fee Payment Reminder', 'Automated fee reminder sent to students', 'SMS', true),
       _Template('Exam Schedule', 'Exam date notification template', 'Email', true),
-      _Template('Leave Approval', 'Notification when leave is approved', 'Push', true),
-      _Template('Event Invitation', 'Generic event invitation template', 'All', true),
-      _Template('Password Reset', 'Account password reset link', 'Email', true),
-      _Template('Welcome Message', 'New student/staff welcome message', 'Email', false),
     ];
 
     return SingleChildScrollView(

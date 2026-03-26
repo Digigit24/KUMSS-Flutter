@@ -18,43 +18,30 @@ class SubjectsScreen extends StatelessWidget {
 
     final subjects = [
       ['Data Structures & Algorithms', 'CS201', 'B.Tech CS', '4', 'Core'],
-      ['Database Management Systems', 'CS301', 'B.Tech CS', '4', 'Core'],
-      ['Machine Learning', 'CS401', 'B.Tech CS', '3', 'Elective'],
       ['Human Anatomy', 'MD101', 'MBBS', '5', 'Core'],
-      ['Business Analytics', 'BA201', 'MBA', '3', 'Core'],
-      ['Constitutional Law I', 'LW101', 'LLB', '4', 'Core'],
-      ['Quantum Physics', 'PH301', 'B.Sc Physics', '3', 'Core'],
     ];
 
     return SingleChildScrollView(
       padding: AppSpacing.pagePadding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          PageHeader(
-            title: 'Subjects',
-            subtitle: 'Maintain the subject catalog',
-            breadcrumbs: const ['Home', 'Academic', 'Subjects'],
-            actions: [AppButton(label: 'Add Subject', icon: Icons.add_rounded, onPressed: () {})],
-          ),
-          AppDataTable(
-            columns: columns,
-            rows: subjects.map((s) => [
-              Text(s[0], style: AppTypography.labelLarge),
-              Text(s[1], style: AppTypography.bodySmall.copyWith(fontWeight: FontWeight.w600, color: AppColors.accent)),
-              Text(s[2], style: AppTypography.bodySmall),
-              Text(s[3], style: AppTypography.bodySmall),
-              StatusBadge(label: s[4], color: s[4] == 'Core' ? AppColors.info : AppColors.secondary),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                IconButton(icon: const Icon(Icons.edit_rounded, size: 18), onPressed: () {}, style: IconButton.styleFrom(foregroundColor: AppColors.textSecondary)),
-                IconButton(icon: const Icon(Icons.delete_outline_rounded, size: 18), onPressed: () {}, style: IconButton.styleFrom(foregroundColor: AppColors.error)),
-              ]),
-            ]).toList(),
-            totalItems: subjects.length,
-            onSearch: (_) {},
-          ),
-        ],
-      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        PageHeader(title: 'Subjects', subtitle: 'Maintain the subject catalog', breadcrumbs: const ['Home', 'Academic', 'Subjects'],
+          actions: [AppButton(label: 'Add Subject', icon: Icons.add_rounded, onPressed: () {})]),
+        AppDataTable(
+          columns: columns,
+          rows: subjects.map((s) => [
+            Text(s[0], style: AppTypography.labelLarge),
+            Text(s[1], style: AppTypography.bodySmall.copyWith(fontWeight: FontWeight.w600, color: AppColors.accent)),
+            Text(s[2], style: AppTypography.bodySmall),
+            Text(s[3], style: AppTypography.bodySmall),
+            StatusBadge(label: s[4], color: s[4] == 'Core' ? AppColors.info : AppColors.secondary),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              IconButton(icon: const Icon(Icons.edit_rounded, size: 18), onPressed: () {}, style: IconButton.styleFrom(foregroundColor: AppColors.textSecondary)),
+              IconButton(icon: const Icon(Icons.delete_outline_rounded, size: 18), onPressed: () {}, style: IconButton.styleFrom(foregroundColor: AppColors.error)),
+            ]),
+          ]).toList(),
+          totalItems: subjects.length, onSearch: (_) {},
+        ),
+      ]),
     );
   }
 }

@@ -92,11 +92,8 @@ class FinanceDashboardScreen extends StatelessWidget {
                   subtitle: 'Students with pending fees',
                   child: Column(
                     children: [
-                      _buildDefaulterItem('Ravi Kumar', 'B.Tech CSE', '\u20B945,000'),
-                      _buildDefaulterItem('Anita Sharma', 'MBA', '\u20B938,000'),
-                      _buildDefaulterItem('Deepak Jha', 'MBBS', '\u20B952,000'),
-                      _buildDefaulterItem('Sunita Rao', 'LLB', '\u20B928,000'),
-                      _buildDefaulterItem('Manoj Tiwari', 'B.Sc', '\u20B922,000'),
+                      _buildDefaulterItem('Dawit Haile', 'B.Tech CSE', '\u20B945,000'),
+                      _buildDefaulterItem('Meron Alemu', 'MBBS', '\u20B952,000'),
                     ],
                   ),
                 ),

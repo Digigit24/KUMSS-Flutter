@@ -18,11 +18,8 @@ class PayslipsScreen extends StatelessWidget {
     ];
 
     final payslips = [
-      ['Dr. Rahul Sharma', 'CSE', 'Feb 2026', '\u20B91,20,000', '\u20B928,000', '\u20B992,000'],
-      ['Priya Patel', 'Admin', 'Feb 2026', '\u20B985,000', '\u20B918,500', '\u20B966,500'],
-      ['Amit Kumar', 'Finance', 'Feb 2026', '\u20B975,000', '\u20B916,200', '\u20B958,800'],
-      ['Dr. Maya Devi', 'Physics', 'Feb 2026', '\u20B91,10,000', '\u20B924,500', '\u20B985,500'],
-      ['Vikram Joshi', 'Admin', 'Feb 2026', '\u20B945,000', '\u20B99,800', '\u20B935,200'],
+      ['Dr. Abebe Kebede', 'CSE', 'Feb 2026', '\u20B91,20,000', '\u20B928,000', '\u20B992,000'],
+      ['Fatima Hassan', 'Admin', 'Feb 2026', '\u20B985,000', '\u20B918,500', '\u20B966,500'],
     ];
 
     return SingleChildScrollView(
