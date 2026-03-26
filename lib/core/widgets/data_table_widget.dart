@@ -19,6 +19,7 @@ class AppTableColumn {
 }
 
 /// A full-featured data table with search, pagination, and actions.
+/// On mobile (<768px), renders as a card list instead of a table.
 class AppDataTable extends StatefulWidget {
   final List<AppTableColumn> columns;
   final List<List<Widget>> rows;
@@ -66,6 +67,9 @@ class _AppDataTableState extends State<AppDataTable> {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile =
+        MediaQuery.of(context).size.width < AppSpacing.mobileBreakpoint;
+
     return Container(
       decoration: BoxDecoration(
         color: AppColors.surface,
@@ -76,7 +80,7 @@ class _AppDataTableState extends State<AppDataTable> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildToolbar(),
+          _buildToolbar(isMobile),
           const Divider(height: 1),
           if (widget.isLoading)
             const Padding(
@@ -85,6 +89,8 @@ class _AppDataTableState extends State<AppDataTable> {
             )
           else if (widget.rows.isEmpty)
             _buildEmpty()
+          else if (isMobile)
+            _buildCardList()
           else
             _buildTable(),
           if (widget.totalItems > widget.pageSize) ...[
@@ -96,9 +102,7 @@ class _AppDataTableState extends State<AppDataTable> {
     );
   }
 
-  Widget _buildToolbar() {
-    final isMobile =
-        MediaQuery.of(context).size.width < AppSpacing.mobileBreakpoint;
+  Widget _buildToolbar(bool isMobile) {
     return Padding(
       padding: const EdgeInsets.all(12),
       child: isMobile
@@ -119,11 +123,7 @@ class _AppDataTableState extends State<AppDataTable> {
                   ),
                 if (widget.actions != null) ...[
                   const SizedBox(height: 8),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: widget.actions!,
-                  ),
+                  Wrap(spacing: 8, runSpacing: 8, children: widget.actions!),
                 ],
               ],
             )
@@ -148,8 +148,8 @@ class _AppDataTableState extends State<AppDataTable> {
                 if (widget.actions != null)
                   Row(
                     children: widget.actions!
-                        .map((a) =>
-                            Padding(padding: const EdgeInsets.only(left: 8), child: a))
+                        .map((a) => Padding(
+                            padding: const EdgeInsets.only(left: 8), child: a))
                         .toList(),
                   ),
               ],
@@ -157,8 +157,68 @@ class _AppDataTableState extends State<AppDataTable> {
     );
   }
 
+  /// Mobile card list — each row becomes a card with label: value pairs.
+  Widget _buildCardList() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: widget.rows.asMap().entries.map((entry) {
+        final cells = entry.value;
+        return Container(
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: entry.key < widget.rows.length - 1
+                    ? AppColors.borderLight
+                    : Colors.transparent,
+              ),
+            ),
+          ),
+          padding: const EdgeInsets.all(14),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: List.generate(
+              widget.columns.length.clamp(0, cells.length),
+              (i) {
+                final col = widget.columns[i];
+                final label = col.label;
+                final cell = cells[i];
+
+                // First column rendered prominently as the "title"
+                if (i == 0) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: cell,
+                  );
+                }
+
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 6),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: 90,
+                        child: Text(
+                          label,
+                          style: AppTypography.caption.copyWith(
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      Expanded(child: cell),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        );
+      }).toList(),
+    );
+  }
+
+  /// Desktop table with horizontal scroll.
   Widget _buildTable() {
-    // Calculate total fixed width from columns
     double totalFixed = 0;
     int flexCount = 0;
     for (final col in widget.columns) {
@@ -168,13 +228,13 @@ class _AppDataTableState extends State<AppDataTable> {
         flexCount++;
       }
     }
-    // Ensure minimum width for flex columns (100px each) + fixed + padding
     final minTableWidth = totalFixed + (flexCount * 100) + 32;
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        final tableWidth =
-            constraints.maxWidth > minTableWidth ? constraints.maxWidth : minTableWidth;
+        final tableWidth = constraints.maxWidth > minTableWidth
+            ? constraints.maxWidth
+            : minTableWidth;
 
         return SingleChildScrollView(
           scrollDirection: Axis.horizontal,
@@ -255,17 +315,13 @@ class _AppDataTableState extends State<AppDataTable> {
           mainAxisSize: MainAxisSize.min,
           children: [
             widget.emptyIcon ??
-                Icon(
-                  Icons.inbox_outlined,
-                  size: 48,
-                  color: AppColors.textTertiary.withValues(alpha: 0.5),
-                ),
+                Icon(Icons.inbox_outlined, size: 48,
+                    color: AppColors.textTertiary.withValues(alpha: 0.5)),
             const SizedBox(height: 16),
             Text(
               widget.emptyMessage ?? 'No data found',
-              style: AppTypography.bodyMedium.copyWith(
-                color: AppColors.textTertiary,
-              ),
+              style: AppTypography.bodyMedium
+                  .copyWith(color: AppColors.textTertiary),
             ),
           ],
         ),
@@ -294,14 +350,16 @@ class _AppDataTableState extends State<AppDataTable> {
               _paginationButton(
                 Icons.chevron_left,
                 widget.currentPage > 1
-                    ? () => widget.onPageChanged?.call(widget.currentPage - 1)
+                    ? () =>
+                        widget.onPageChanged?.call(widget.currentPage - 1)
                     : null,
               ),
               const SizedBox(width: 4),
               _paginationButton(
                 Icons.chevron_right,
                 widget.currentPage < totalPages
-                    ? () => widget.onPageChanged?.call(widget.currentPage + 1)
+                    ? () =>
+                        widget.onPageChanged?.call(widget.currentPage + 1)
                     : null,
               ),
             ],
