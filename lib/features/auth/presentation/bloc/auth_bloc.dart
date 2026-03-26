@@ -67,12 +67,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       // Simulate API call — replace with real API integration
       await Future.delayed(const Duration(seconds: 1));
 
-      if (event.email == 'admin@kumss.edu.et' &&
-          event.password == 'admin123') {
-        emit(AuthAuthenticated(user: UserModel.demoSuperAdmin));
-      } else {
-        emit(const AuthError(message: 'Invalid email or password'));
-      }
+      // Accept any non-empty credentials for demo
+      emit(AuthAuthenticated(user: UserModel.demoSuperAdmin));
     } catch (e) {
       emit(AuthError(message: e.toString()));
     }
@@ -86,8 +82,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onCheck(
       AuthCheckRequested event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
-    // Auto-authenticate with demo super admin for UI preview
+    // Show login screen — user must click Sign In
     await Future.delayed(const Duration(milliseconds: 300));
-    emit(AuthAuthenticated(user: UserModel.demoSuperAdmin));
+    emit(AuthUnauthenticated());
   }
 }
