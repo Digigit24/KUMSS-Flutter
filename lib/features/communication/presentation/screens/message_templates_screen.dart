@@ -7,13 +7,15 @@ class MessageTemplatesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < AppSpacing.mobileBreakpoint;
+
     final templates = [
       _Template('Fee Payment Reminder', 'Automated fee reminder sent to students', 'SMS', true),
       _Template('Exam Schedule', 'Exam date notification template', 'Email', true),
     ];
 
     return SingleChildScrollView(
-      padding: AppSpacing.pagePadding,
+      padding: isMobile ? AppSpacing.pagePaddingMobile : AppSpacing.pagePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -26,7 +28,12 @@ class MessageTemplatesScreen extends StatelessWidget {
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 16, mainAxisSpacing: 16, childAspectRatio: 2),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: isMobile ? 1 : 3,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+              childAspectRatio: isMobile ? 2.0 : 2.0,
+            ),
             itemCount: templates.length,
             itemBuilder: (_, i) {
               final t = templates[i];
@@ -37,11 +44,11 @@ class MessageTemplatesScreen extends StatelessWidget {
                   Row(children: [
                     const Icon(Icons.text_snippet_rounded, size: 20, color: AppColors.accent),
                     const SizedBox(width: 8),
-                    Expanded(child: Text(t.name, style: AppTypography.h4)),
+                    Expanded(child: Text(t.name, style: AppTypography.h4, maxLines: 1, overflow: TextOverflow.ellipsis)),
                     t.isActive ? StatusBadge.active() : StatusBadge.inactive(),
                   ]),
                   const SizedBox(height: 8),
-                  Text(t.description, style: AppTypography.caption, maxLines: 2),
+                  Text(t.description, style: AppTypography.caption, maxLines: 2, overflow: TextOverflow.ellipsis),
                   const Spacer(),
                   Row(children: [
                     StatusBadge(label: t.channel, color: AppColors.info),

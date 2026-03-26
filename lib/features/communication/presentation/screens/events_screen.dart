@@ -7,13 +7,15 @@ class EventsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < AppSpacing.mobileBreakpoint;
+
     final events = [
       _Event('Annual Sports Day', 'Apr 12, 2026', 'All Day', 'All Colleges', 450, AppColors.success, Icons.sports_rounded),
       _Event('Guest Lecture - AI in Medicine', 'Mar 30, 2026', '2:00 PM', 'Medicine', 120, AppColors.info, Icons.school_rounded),
     ];
 
     return SingleChildScrollView(
-      padding: AppSpacing.pagePadding,
+      padding: isMobile ? AppSpacing.pagePaddingMobile : AppSpacing.pagePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -26,7 +28,12 @@ class EventsScreen extends StatelessWidget {
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 16, mainAxisSpacing: 16, childAspectRatio: 1.4),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: isMobile ? 1 : 3,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+              childAspectRatio: isMobile ? 1.4 : 1.4,
+            ),
             itemCount: events.length,
             itemBuilder: (_, i) {
               final e = events[i];
@@ -45,23 +52,23 @@ class EventsScreen extends StatelessWidget {
                     Row(children: [
                       const Icon(Icons.calendar_today_rounded, size: 14, color: AppColors.textTertiary),
                       const SizedBox(width: 6),
-                      Text(e.date, style: AppTypography.bodySmall),
+                      Flexible(child: Text(e.date, style: AppTypography.bodySmall, maxLines: 1, overflow: TextOverflow.ellipsis)),
                       const SizedBox(width: 12),
                       const Icon(Icons.access_time_rounded, size: 14, color: AppColors.textTertiary),
                       const SizedBox(width: 4),
-                      Text(e.time, style: AppTypography.bodySmall),
+                      Flexible(child: Text(e.time, style: AppTypography.bodySmall, maxLines: 1, overflow: TextOverflow.ellipsis)),
                     ]),
                     const SizedBox(height: 8),
                     Row(children: [
                       const Icon(Icons.apartment_rounded, size: 14, color: AppColors.textTertiary),
                       const SizedBox(width: 6),
-                      Text(e.college, style: AppTypography.bodySmall),
+                      Flexible(child: Text(e.college, style: AppTypography.bodySmall, maxLines: 1, overflow: TextOverflow.ellipsis)),
                     ]),
                     const Spacer(),
                     Row(children: [
                       const Icon(Icons.people_rounded, size: 14, color: AppColors.textTertiary),
                       const SizedBox(width: 6),
-                      Text('${e.registrations} registrations', style: AppTypography.caption),
+                      Flexible(child: Text('${e.registrations} registrations', style: AppTypography.caption, maxLines: 1, overflow: TextOverflow.ellipsis)),
                       const Spacer(),
                       IconButton(icon: const Icon(Icons.edit_rounded, size: 18), onPressed: () {}, style: IconButton.styleFrom(foregroundColor: AppColors.textSecondary)),
                     ]),

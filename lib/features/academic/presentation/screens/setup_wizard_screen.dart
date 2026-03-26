@@ -25,8 +25,10 @@ class _SetupWizardScreenState extends State<SetupWizardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < AppSpacing.mobileBreakpoint;
+
     return SingleChildScrollView(
-      padding: AppSpacing.pagePadding,
+      padding: isMobile ? AppSpacing.pagePaddingMobile : AppSpacing.pagePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -37,7 +39,7 @@ class _SetupWizardScreenState extends State<SetupWizardScreen> {
           ),
           // Step indicator
           Container(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.all(isMobile ? 16 : 24),
             decoration: BoxDecoration(
               color: AppColors.surface,
               borderRadius: AppSpacing.borderRadiusLg,
@@ -47,74 +49,92 @@ class _SetupWizardScreenState extends State<SetupWizardScreen> {
             child: Column(
               children: [
                 // Step progress bar
-                Row(
-                  children: List.generate(_steps.length, (i) {
-                    final isCompleted = i < _currentStep;
-                    final isCurrent = i == _currentStep;
-                    return Expanded(
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 32,
-                            height: 32,
-                            decoration: BoxDecoration(
-                              color: isCompleted
-                                  ? AppColors.success
-                                  : isCurrent
-                                      ? AppColors.primary
-                                      : AppColors.surfaceVariant,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Center(
-                              child: isCompleted
-                                  ? const Icon(Icons.check, size: 16, color: Colors.white)
-                                  : Text(
-                                      '${i + 1}',
-                                      style: AppTypography.labelSmall.copyWith(
-                                        color: isCurrent ? Colors.white : AppColors.textTertiary,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                isMobile
+                    ? SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: List.generate(_steps.length, (i) => _buildStepCircle(i)),
+                        ),
+                      )
+                    : Row(
+                        children: List.generate(_steps.length, (i) {
+                          final isCompleted = i < _currentStep;
+                          final isCurrent = i == _currentStep;
+                          return Expanded(
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 32,
+                                  height: 32,
+                                  decoration: BoxDecoration(
+                                    color: isCompleted
+                                        ? AppColors.success
+                                        : isCurrent
+                                            ? AppColors.primary
+                                            : AppColors.surfaceVariant,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Center(
+                                    child: isCompleted
+                                        ? const Icon(Icons.check, size: 16, color: Colors.white)
+                                        : Text(
+                                            '${i + 1}',
+                                            style: AppTypography.labelSmall.copyWith(
+                                              color: isCurrent ? Colors.white : AppColors.textTertiary,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                  ),
+                                ),
+                                if (i < _steps.length - 1)
+                                  Expanded(
+                                    child: Container(
+                                      height: 2,
+                                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                                      color: isCompleted ? AppColors.success : AppColors.border,
                                     ),
+                                  ),
+                              ],
                             ),
-                          ),
-                          if (i < _steps.length - 1)
-                            Expanded(
-                              child: Container(
-                                height: 2,
-                                margin: const EdgeInsets.symmetric(horizontal: 4),
-                                color: isCompleted ? AppColors.success : AppColors.border,
-                              ),
-                            ),
-                        ],
+                          );
+                        }),
                       ),
-                    );
-                  }),
-                ),
                 const SizedBox(height: 8),
                 // Step labels
-                Row(
-                  children: _steps.map((s) {
-                    final i = _steps.indexOf(s);
-                    final isCurrent = i == _currentStep;
-                    return Expanded(
-                      child: Text(
-                        s.title,
-                        style: AppTypography.caption.copyWith(
-                          color: isCurrent ? AppColors.primary : AppColors.textTertiary,
-                          fontWeight: isCurrent ? FontWeight.w600 : FontWeight.w400,
+                if (!isMobile)
+                  Row(
+                    children: _steps.map((s) {
+                      final i = _steps.indexOf(s);
+                      final isCurrent = i == _currentStep;
+                      return Expanded(
+                        child: Text(
+                          s.title,
+                          style: AppTypography.caption.copyWith(
+                            color: isCurrent ? AppColors.primary : AppColors.textTertiary,
+                            fontWeight: isCurrent ? FontWeight.w600 : FontWeight.w400,
+                          ),
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    );
-                  }).toList(),
-                ),
+                      );
+                    }).toList(),
+                  ),
+                if (isMobile)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Text(
+                      'Step ${_currentStep + 1}: ${_steps[_currentStep].title}',
+                      style: AppTypography.labelMedium.copyWith(color: AppColors.primary, fontWeight: FontWeight.w600),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 const SizedBox(height: 32),
                 // Current step content
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.all(32),
+                  padding: EdgeInsets.all(isMobile ? 20 : 32),
                   decoration: BoxDecoration(
                     color: AppColors.surfaceVariant.withValues(alpha: 0.3),
                     borderRadius: AppSpacing.borderRadiusMd,
@@ -137,7 +157,7 @@ class _SetupWizardScreenState extends State<SetupWizardScreen> {
                       const SizedBox(height: 24),
                       // Placeholder form
                       SizedBox(
-                        width: 400,
+                        width: isMobile ? double.infinity : 400,
                         child: Column(
                           children: [
                             const TextField(decoration: InputDecoration(labelText: 'Name', hintText: 'Enter name')),
@@ -180,6 +200,46 @@ class _SetupWizardScreenState extends State<SetupWizardScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildStepCircle(int i) {
+    final isCompleted = i < _currentStep;
+    final isCurrent = i == _currentStep;
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: 32,
+          height: 32,
+          decoration: BoxDecoration(
+            color: isCompleted
+                ? AppColors.success
+                : isCurrent
+                    ? AppColors.primary
+                    : AppColors.surfaceVariant,
+            shape: BoxShape.circle,
+          ),
+          child: Center(
+            child: isCompleted
+                ? const Icon(Icons.check, size: 16, color: Colors.white)
+                : Text(
+                    '${i + 1}',
+                    style: AppTypography.labelSmall.copyWith(
+                      color: isCurrent ? Colors.white : AppColors.textTertiary,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+          ),
+        ),
+        if (i < _steps.length - 1)
+          Container(
+            width: 24,
+            height: 2,
+            margin: const EdgeInsets.symmetric(horizontal: 4),
+            color: isCompleted ? AppColors.success : AppColors.border,
+          ),
+      ],
     );
   }
 }

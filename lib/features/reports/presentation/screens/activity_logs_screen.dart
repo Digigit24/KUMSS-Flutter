@@ -7,6 +7,8 @@ class ActivityLogsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < AppSpacing.mobileBreakpoint;
+
     final columns = [
       const AppTableColumn(label: 'Action', flex: 2),
       const AppTableColumn(label: 'User', flex: 1),
@@ -22,7 +24,7 @@ class ActivityLogsScreen extends StatelessWidget {
     ];
 
     return SingleChildScrollView(
-      padding: AppSpacing.pagePadding,
+      padding: isMobile ? AppSpacing.pagePaddingMobile : AppSpacing.pagePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -37,30 +39,55 @@ class ActivityLogsScreen extends StatelessWidget {
           // Filters
           Padding(
             padding: const EdgeInsets.only(bottom: 16),
-            child: Row(
-              children: [
-                SizedBox(width: 200, child: DropdownButtonFormField<String>(
-                  decoration: const InputDecoration(labelText: 'Module', isDense: true),
-                  items: ['All Modules', 'Auth', 'Students', 'Store', 'HR', 'Academic', 'Core']
-                    .map((m) => DropdownMenuItem(value: m, child: Text(m, style: AppTypography.bodySmall))).toList(),
-                  onChanged: (_) {},
-                )),
-                const SizedBox(width: 12),
-                SizedBox(width: 200, child: DropdownButtonFormField<String>(
-                  decoration: const InputDecoration(labelText: 'User', isDense: true),
-                  items: ['All Users', 'Super Admin', 'Amit Kumar', 'Dr. Rahul S.', 'Priya Patel']
-                    .map((u) => DropdownMenuItem(value: u, child: Text(u, style: AppTypography.bodySmall))).toList(),
-                  onChanged: (_) {},
-                )),
-                const SizedBox(width: 12),
-                SizedBox(width: 200, child: DropdownButtonFormField<String>(
-                  decoration: const InputDecoration(labelText: 'Date Range', isDense: true),
-                  items: ['Today', 'Last 7 Days', 'Last 30 Days', 'Custom']
-                    .map((d) => DropdownMenuItem(value: d, child: Text(d, style: AppTypography.bodySmall))).toList(),
-                  onChanged: (_) {},
-                )),
-              ],
-            ),
+            child: isMobile
+                ? Column(
+                    children: [
+                      DropdownButtonFormField<String>(
+                        decoration: const InputDecoration(labelText: 'Module', isDense: true),
+                        items: ['All Modules', 'Auth', 'Students', 'Store', 'HR', 'Academic', 'Core']
+                          .map((m) => DropdownMenuItem(value: m, child: Text(m, style: AppTypography.bodySmall))).toList(),
+                        onChanged: (_) {},
+                      ),
+                      const SizedBox(height: 12),
+                      DropdownButtonFormField<String>(
+                        decoration: const InputDecoration(labelText: 'User', isDense: true),
+                        items: ['All Users', 'Super Admin', 'Amit Kumar', 'Dr. Rahul S.', 'Priya Patel']
+                          .map((u) => DropdownMenuItem(value: u, child: Text(u, style: AppTypography.bodySmall))).toList(),
+                        onChanged: (_) {},
+                      ),
+                      const SizedBox(height: 12),
+                      DropdownButtonFormField<String>(
+                        decoration: const InputDecoration(labelText: 'Date Range', isDense: true),
+                        items: ['Today', 'Last 7 Days', 'Last 30 Days', 'Custom']
+                          .map((d) => DropdownMenuItem(value: d, child: Text(d, style: AppTypography.bodySmall))).toList(),
+                        onChanged: (_) {},
+                      ),
+                    ],
+                  )
+                : Row(
+                    children: [
+                      SizedBox(width: 200, child: DropdownButtonFormField<String>(
+                        decoration: const InputDecoration(labelText: 'Module', isDense: true),
+                        items: ['All Modules', 'Auth', 'Students', 'Store', 'HR', 'Academic', 'Core']
+                          .map((m) => DropdownMenuItem(value: m, child: Text(m, style: AppTypography.bodySmall))).toList(),
+                        onChanged: (_) {},
+                      )),
+                      const SizedBox(width: 12),
+                      SizedBox(width: 200, child: DropdownButtonFormField<String>(
+                        decoration: const InputDecoration(labelText: 'User', isDense: true),
+                        items: ['All Users', 'Super Admin', 'Amit Kumar', 'Dr. Rahul S.', 'Priya Patel']
+                          .map((u) => DropdownMenuItem(value: u, child: Text(u, style: AppTypography.bodySmall))).toList(),
+                        onChanged: (_) {},
+                      )),
+                      const SizedBox(width: 12),
+                      SizedBox(width: 200, child: DropdownButtonFormField<String>(
+                        decoration: const InputDecoration(labelText: 'Date Range', isDense: true),
+                        items: ['Today', 'Last 7 Days', 'Last 30 Days', 'Custom']
+                          .map((d) => DropdownMenuItem(value: d, child: Text(d, style: AppTypography.bodySmall))).toList(),
+                        onChanged: (_) {},
+                      )),
+                    ],
+                  ),
           ),
           AppDataTable(
             columns: columns,
@@ -74,13 +101,13 @@ class ActivityLogsScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 10),
-                Expanded(child: Text(l[0], style: AppTypography.bodySmall)),
+                Expanded(child: Text(l[0], style: AppTypography.bodySmall, maxLines: 1, overflow: TextOverflow.ellipsis)),
               ]),
-              Text(l[1], style: AppTypography.bodySmall),
+              Text(l[1], style: AppTypography.bodySmall, maxLines: 1, overflow: TextOverflow.ellipsis),
               StatusBadge(label: l[2], color: AppColors.info),
-              Text(l[3], style: AppTypography.bodySmall),
-              Text(l[4], style: AppTypography.caption),
-              Text(l[5], style: AppTypography.caption),
+              Text(l[3], style: AppTypography.bodySmall, maxLines: 1, overflow: TextOverflow.ellipsis),
+              Text(l[4], style: AppTypography.caption, maxLines: 1, overflow: TextOverflow.ellipsis),
+              Text(l[5], style: AppTypography.caption, maxLines: 1, overflow: TextOverflow.ellipsis),
             ]).toList(),
             totalItems: logs.length,
             onSearch: (_) {},

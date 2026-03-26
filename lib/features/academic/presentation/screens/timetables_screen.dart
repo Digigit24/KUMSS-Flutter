@@ -7,6 +7,8 @@ class TimetablesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < AppSpacing.mobileBreakpoint;
+
     final days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     final times = ['9:00', '10:00', '11:00', '12:00', '1:00', '2:00', '3:00', '4:00'];
 
@@ -26,7 +28,7 @@ class TimetablesScreen extends StatelessWidget {
     };
 
     return SingleChildScrollView(
-      padding: AppSpacing.pagePadding,
+      padding: isMobile ? AppSpacing.pagePaddingMobile : AppSpacing.pagePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -42,20 +44,16 @@ class TimetablesScreen extends StatelessWidget {
           // Class selector
           Padding(
             padding: const EdgeInsets.only(bottom: 16),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 240,
-                  child: DropdownButtonFormField<String>(
-                    value: 'B.Tech CSE - Year 2, Section A',
-                    decoration: const InputDecoration(labelText: 'Select Class'),
-                    items: ['B.Tech CSE - Year 2, Section A', 'B.Tech CSE - Year 2, Section B', 'MBA - Year 1, Section A']
-                        .map((c) => DropdownMenuItem(value: c, child: Text(c, style: AppTypography.bodySmall)))
-                        .toList(),
-                    onChanged: (_) {},
-                  ),
-                ),
-              ],
+            child: SizedBox(
+              width: isMobile ? double.infinity : 240,
+              child: DropdownButtonFormField<String>(
+                value: 'B.Tech CSE - Year 2, Section A',
+                decoration: const InputDecoration(labelText: 'Select Class'),
+                items: ['B.Tech CSE - Year 2, Section A', 'B.Tech CSE - Year 2, Section B', 'MBA - Year 1, Section A']
+                    .map((c) => DropdownMenuItem(value: c, child: Text(c, style: AppTypography.bodySmall, overflow: TextOverflow.ellipsis, maxLines: 1)))
+                    .toList(),
+                onChanged: (_) {},
+              ),
             ),
           ),
           // Timetable grid
@@ -97,8 +95,8 @@ class TimetablesScreen extends StatelessWidget {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Text(slot.subject, style: AppTypography.tag.copyWith(color: slot.color, fontWeight: FontWeight.w600)),
-                                        Text(slot.teacher, style: AppTypography.caption.copyWith(fontSize: 10)),
+                                        Text(slot.subject, style: AppTypography.tag.copyWith(color: slot.color, fontWeight: FontWeight.w600), maxLines: 1, overflow: TextOverflow.ellipsis),
+                                        Text(slot.teacher, style: AppTypography.caption.copyWith(fontSize: 10), maxLines: 1, overflow: TextOverflow.ellipsis),
                                       ],
                                     ),
                                   )

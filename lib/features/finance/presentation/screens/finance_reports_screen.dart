@@ -7,13 +7,15 @@ class FinanceReportsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < AppSpacing.mobileBreakpoint;
+
     final reports = [
       _Report('Fee Collection Report', 'Summary of fee collection across all colleges', Icons.receipt_long_rounded, AppColors.accent),
       _Report('Expense Analysis', 'Monthly expense breakdown by category', Icons.pie_chart_rounded, AppColors.error),
     ];
 
     return SingleChildScrollView(
-      padding: AppSpacing.pagePadding,
+      padding: isMobile ? AppSpacing.pagePaddingMobile : AppSpacing.pagePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -25,11 +27,11 @@ class FinanceReportsScreen extends StatelessWidget {
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: isMobile ? 1 : 2,
               crossAxisSpacing: 16,
               mainAxisSpacing: 16,
-              childAspectRatio: 1.5,
+              childAspectRatio: isMobile ? 1.5 : 1.5,
             ),
             itemCount: reports.length,
             itemBuilder: (_, i) {
@@ -51,7 +53,7 @@ class FinanceReportsScreen extends StatelessWidget {
                       child: Icon(r.icon, size: 22, color: r.color),
                     ),
                     const SizedBox(height: 12),
-                    Text(r.title, style: AppTypography.h4),
+                    Text(r.title, style: AppTypography.h4, maxLines: 1, overflow: TextOverflow.ellipsis),
                     const SizedBox(height: 4),
                     Expanded(child: Text(r.description, style: AppTypography.caption, maxLines: 2, overflow: TextOverflow.ellipsis)),
                     const SizedBox(height: 8),

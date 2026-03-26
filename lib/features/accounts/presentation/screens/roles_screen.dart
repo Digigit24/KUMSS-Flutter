@@ -7,13 +7,15 @@ class RolesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < AppSpacing.mobileBreakpoint;
+
     final roles = [
       _Role('Super Admin', 'Full system access across all colleges', 'Global', true, 1, 'All'),
       _Role('College Admin', 'College-level administration and oversight', 'College', true, 2, '24'),
     ];
 
     return SingleChildScrollView(
-      padding: AppSpacing.pagePadding,
+      padding: isMobile ? AppSpacing.pagePaddingMobile : AppSpacing.pagePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -26,7 +28,12 @@ class RolesScreen extends StatelessWidget {
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 16, mainAxisSpacing: 16, childAspectRatio: 2.2),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: isMobile ? 1 : 2,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+              childAspectRatio: isMobile ? 1.8 : 2.2,
+            ),
             itemCount: roles.length,
             itemBuilder: (_, i) {
               final r = roles[i];
@@ -38,8 +45,8 @@ class RolesScreen extends StatelessWidget {
                     Container(width: 40, height: 40, decoration: BoxDecoration(color: AppColors.primarySurface, borderRadius: AppSpacing.borderRadiusMd), child: const Icon(Icons.admin_panel_settings_rounded, size: 20, color: AppColors.primary)),
                     const SizedBox(width: 12),
                     Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      Text(r.name, style: AppTypography.h4),
-                      Text(r.scope, style: AppTypography.caption),
+                      Text(r.name, style: AppTypography.h4, maxLines: 1, overflow: TextOverflow.ellipsis),
+                      Text(r.scope, style: AppTypography.caption, maxLines: 1, overflow: TextOverflow.ellipsis),
                     ])),
                     r.isActive ? StatusBadge.active() : StatusBadge.inactive(),
                   ]),
@@ -64,7 +71,7 @@ class RolesScreen extends StatelessWidget {
 
   Widget _statChip(IconData icon, String label) => Row(mainAxisSize: MainAxisSize.min, children: [
     Icon(icon, size: 14, color: AppColors.textTertiary), const SizedBox(width: 4),
-    Text(label, style: AppTypography.caption),
+    Text(label, style: AppTypography.caption, maxLines: 1, overflow: TextOverflow.ellipsis),
   ]);
 }
 

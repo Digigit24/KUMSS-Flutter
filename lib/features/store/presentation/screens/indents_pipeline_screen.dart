@@ -7,6 +7,8 @@ class IndentsPipelineScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < AppSpacing.mobileBreakpoint;
+
     final stages = [
       _Stage('Draft', AppColors.textTertiary, ['IND-1026']),
       _Stage('Submitted', AppColors.info, ['IND-1025']),
@@ -17,7 +19,7 @@ class IndentsPipelineScreen extends StatelessWidget {
     ];
 
     return SingleChildScrollView(
-      padding: AppSpacing.pagePadding,
+      padding: isMobile ? AppSpacing.pagePaddingMobile : AppSpacing.pagePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -54,8 +56,8 @@ class IndentsPipelineScreen extends StatelessWidget {
                                 decoration: BoxDecoration(color: stage.color, shape: BoxShape.circle),
                               ),
                               const SizedBox(width: 8),
-                              Text(stage.name, style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600, color: stage.color)),
-                              const Spacer(),
+                              Flexible(child: Text(stage.name, style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600, color: stage.color), maxLines: 1, overflow: TextOverflow.ellipsis)),
+                              const SizedBox(width: 8),
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                                 decoration: BoxDecoration(color: stage.color.withValues(alpha: 0.15), borderRadius: AppSpacing.borderRadiusFull),
@@ -77,15 +79,15 @@ class IndentsPipelineScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(item, style: AppTypography.labelMedium.copyWith(color: AppColors.accent)),
+                              Text(item, style: AppTypography.labelMedium.copyWith(color: AppColors.accent), maxLines: 1, overflow: TextOverflow.ellipsis),
                               const SizedBox(height: 4),
-                              Text('Equipment request', style: AppTypography.caption),
+                              Text('Equipment request', style: AppTypography.caption, maxLines: 1, overflow: TextOverflow.ellipsis),
                               const SizedBox(height: 8),
                               Row(
                                 children: [
                                   const Icon(Icons.apartment_rounded, size: 12, color: AppColors.textTertiary),
                                   const SizedBox(width: 4),
-                                  Text('Engineering', style: AppTypography.caption),
+                                  Flexible(child: Text('Engineering', style: AppTypography.caption, maxLines: 1, overflow: TextOverflow.ellipsis)),
                                 ],
                               ),
                             ],

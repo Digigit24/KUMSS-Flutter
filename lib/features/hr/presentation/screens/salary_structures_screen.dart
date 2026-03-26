@@ -7,13 +7,15 @@ class SalaryStructuresScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < AppSpacing.mobileBreakpoint;
+
     final structures = [
       _Structure('Professor Grade', '\u20B91,20,000', '\u20B91,50,000', 28, true),
       _Structure('Administrative Staff', '\u20B935,000', '\u20B950,000', 45, true),
     ];
 
     return SingleChildScrollView(
-      padding: AppSpacing.pagePadding,
+      padding: isMobile ? AppSpacing.pagePaddingMobile : AppSpacing.pagePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -26,7 +28,12 @@ class SalaryStructuresScreen extends StatelessWidget {
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 16, mainAxisSpacing: 16, childAspectRatio: 1.8),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: isMobile ? 1 : 3,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+              childAspectRatio: isMobile ? 1.8 : 1.8,
+            ),
             itemCount: structures.length,
             itemBuilder: (_, i) {
               final s = structures[i];
@@ -37,26 +44,26 @@ class SalaryStructuresScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(children: [
-                      Expanded(child: Text(s.name, style: AppTypography.h4)),
+                      Expanded(child: Text(s.name, style: AppTypography.h4, maxLines: 1, overflow: TextOverflow.ellipsis)),
                       s.isActive ? StatusBadge.active() : StatusBadge.inactive(),
                     ]),
                     const SizedBox(height: 12),
                     Row(children: [
                       Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                         Text('Min', style: AppTypography.caption),
-                        Text(s.minSalary, style: AppTypography.labelLarge),
+                        Text(s.minSalary, style: AppTypography.labelLarge, maxLines: 1, overflow: TextOverflow.ellipsis),
                       ]),
                       const SizedBox(width: 24),
                       Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                         Text('Max', style: AppTypography.caption),
-                        Text(s.maxSalary, style: AppTypography.labelLarge),
+                        Text(s.maxSalary, style: AppTypography.labelLarge, maxLines: 1, overflow: TextOverflow.ellipsis),
                       ]),
                     ]),
                     const Spacer(),
                     Row(children: [
                       Icon(Icons.people_rounded, size: 14, color: AppColors.textTertiary),
                       const SizedBox(width: 4),
-                      Text('${s.employees} employees', style: AppTypography.caption),
+                      Flexible(child: Text('${s.employees} employees', style: AppTypography.caption, maxLines: 1, overflow: TextOverflow.ellipsis)),
                       const Spacer(),
                       IconButton(icon: const Icon(Icons.edit_rounded, size: 18), onPressed: () {}, style: IconButton.styleFrom(foregroundColor: AppColors.textSecondary)),
                     ]),

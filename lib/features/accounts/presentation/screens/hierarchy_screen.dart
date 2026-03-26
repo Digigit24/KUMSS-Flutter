@@ -7,8 +7,10 @@ class HierarchyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < AppSpacing.mobileBreakpoint;
+
     return SingleChildScrollView(
-      padding: AppSpacing.pagePadding,
+      padding: isMobile ? AppSpacing.pagePaddingMobile : AppSpacing.pagePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -22,31 +24,41 @@ class HierarchyScreen extends StatelessWidget {
             subtitle: 'Permissions flow downward',
             child: Padding(
               padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  _buildHierarchyNode('Super Admin', 'Full access', Icons.shield_rounded, AppColors.error, 0),
-                  _buildConnector(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minWidth: isMobile ? 350 : 600),
+                  child: Column(
                     children: [
-                      _buildHierarchyNode('College Admin', 'College-level', Icons.admin_panel_settings_rounded, AppColors.accent, 1),
-                      _buildHierarchyNode('Chief Accountant', 'Finance global', Icons.account_balance_rounded, AppColors.secondary, 1),
-                      _buildHierarchyNode('Hostel Manager', 'Hostel global', Icons.hotel_rounded, AppColors.info, 1),
+                      _buildHierarchyNode('Super Admin', 'Full access', Icons.shield_rounded, AppColors.error, 0, isMobile),
+                      _buildConnector(),
+                      Wrap(
+                        spacing: isMobile ? 8 : 16,
+                        runSpacing: 8,
+                        alignment: WrapAlignment.center,
+                        children: [
+                          _buildHierarchyNode('College Admin', 'College-level', Icons.admin_panel_settings_rounded, AppColors.accent, 1, isMobile),
+                          _buildHierarchyNode('Chief Accountant', 'Finance global', Icons.account_balance_rounded, AppColors.secondary, 1, isMobile),
+                          _buildHierarchyNode('Hostel Manager', 'Hostel global', Icons.hotel_rounded, AppColors.info, 1, isMobile),
+                        ],
+                      ),
+                      _buildConnector(),
+                      Wrap(
+                        spacing: isMobile ? 8 : 16,
+                        runSpacing: 8,
+                        alignment: WrapAlignment.center,
+                        children: [
+                          _buildHierarchyNode('Teacher', 'Academic', Icons.school_rounded, AppColors.success, 2, isMobile),
+                          _buildHierarchyNode('Accountant', 'Finance', Icons.receipt_rounded, AppColors.secondary, 2, isMobile),
+                          _buildHierarchyNode('Clerk', 'Admin tasks', Icons.edit_note_rounded, AppColors.textTertiary, 2, isMobile),
+                          _buildHierarchyNode('Librarian', 'Library', Icons.local_library_rounded, AppColors.info, 2, isMobile),
+                        ],
+                      ),
+                      _buildConnector(),
+                      _buildHierarchyNode('Student', 'Limited access', Icons.person_rounded, AppColors.textTertiary, 3, isMobile),
                     ],
                   ),
-                  _buildConnector(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      _buildHierarchyNode('Teacher', 'Academic', Icons.school_rounded, AppColors.success, 2),
-                      _buildHierarchyNode('Accountant', 'Finance', Icons.receipt_rounded, AppColors.secondary, 2),
-                      _buildHierarchyNode('Clerk', 'Admin tasks', Icons.edit_note_rounded, AppColors.textTertiary, 2),
-                      _buildHierarchyNode('Librarian', 'Library', Icons.local_library_rounded, AppColors.info, 2),
-                    ],
-                  ),
-                  _buildConnector(),
-                  _buildHierarchyNode('Student', 'Limited access', Icons.person_rounded, AppColors.textTertiary, 3),
-                ],
+                ),
               ),
             ),
           ),
@@ -55,10 +67,10 @@ class HierarchyScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHierarchyNode(String role, String scope, IconData icon, Color color, int level) {
+  Widget _buildHierarchyNode(String role, String scope, IconData icon, Color color, int level, bool isMobile) {
     return Container(
-      width: 160,
-      padding: const EdgeInsets.all(16),
+      width: isMobile ? 120 : 160,
+      padding: EdgeInsets.all(isMobile ? 10 : 16),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.06),
         borderRadius: AppSpacing.borderRadiusLg,
@@ -67,18 +79,18 @@ class HierarchyScreen extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            width: 44,
-            height: 44,
+            width: isMobile ? 36 : 44,
+            height: isMobile ? 36 : 44,
             decoration: BoxDecoration(
               color: color.withValues(alpha: 0.12),
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, size: 22, color: color),
+            child: Icon(icon, size: isMobile ? 18 : 22, color: color),
           ),
           const SizedBox(height: 8),
-          Text(role, style: AppTypography.labelLarge, textAlign: TextAlign.center),
+          Text(role, style: AppTypography.labelLarge, textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.ellipsis),
           const SizedBox(height: 2),
-          Text(scope, style: AppTypography.caption, textAlign: TextAlign.center),
+          Text(scope, style: AppTypography.caption, textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.ellipsis),
         ],
       ),
     );

@@ -7,6 +7,8 @@ class ClassroomsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < AppSpacing.mobileBreakpoint;
+
     final columns = [
       const AppTableColumn(label: 'Room', flex: 1),
       const AppTableColumn(label: 'Building', flex: 1),
@@ -27,7 +29,7 @@ class ClassroomsScreen extends StatelessWidget {
     ];
 
     return SingleChildScrollView(
-      padding: AppSpacing.pagePadding,
+      padding: isMobile ? AppSpacing.pagePaddingMobile : AppSpacing.pagePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -43,12 +45,12 @@ class ClassroomsScreen extends StatelessWidget {
               Row(children: [
                 Container(width: 36, height: 36, decoration: BoxDecoration(color: AppColors.infoSurface, borderRadius: AppSpacing.borderRadiusMd), child: const Icon(Icons.meeting_room_rounded, size: 18, color: AppColors.info)),
                 const SizedBox(width: 10),
-                Expanded(child: Text(r[0] as String, style: AppTypography.labelLarge)),
+                Expanded(child: Text(r[0] as String, style: AppTypography.labelLarge, maxLines: 1, overflow: TextOverflow.ellipsis)),
               ]),
-              Text(r[1] as String, style: AppTypography.bodySmall),
+              Text(r[1] as String, style: AppTypography.bodySmall, maxLines: 1, overflow: TextOverflow.ellipsis),
               StatusBadge(label: r[2] as String, color: AppColors.accent),
-              Text(r[3] as String, style: AppTypography.bodySmall),
-              Text(r[4] as String, style: AppTypography.caption, overflow: TextOverflow.ellipsis),
+              Text(r[3] as String, style: AppTypography.bodySmall, maxLines: 1, overflow: TextOverflow.ellipsis),
+              Text(r[4] as String, style: AppTypography.caption, overflow: TextOverflow.ellipsis, maxLines: 1),
               r[5] as bool ? StatusBadge.active() : StatusBadge.inactive(),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 IconButton(icon: const Icon(Icons.edit_rounded, size: 18), onPressed: () {}, style: IconButton.styleFrom(foregroundColor: AppColors.textSecondary)),

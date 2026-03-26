@@ -7,30 +7,29 @@ class SuperAdminApprovalsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < AppSpacing.mobileBreakpoint;
+
     final indents = [
       _Indent('IND-1024', 'Lab Equipment - Oscilloscopes (5 units)', 'Engineering', 'urgent', '\u20B91,25,000', 'Dr. Abebe Kebede', '2 hours ago'),
       _Indent('IND-1023', 'Medical Supplies - Surgical Kits (20 sets)', 'Medicine', 'high', '\u20B92,80,000', 'Dr. Sara Tadesse', '1 day ago'),
     ];
 
     return SingleChildScrollView(
-      padding: AppSpacing.pagePadding,
+      padding: isMobile ? AppSpacing.pagePaddingMobile : AppSpacing.pagePadding,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         const PageHeader(title: 'CEO Approvals', subtitle: 'Review and approve/reject store indent requests from all colleges', breadcrumbs: ['Home', 'Store', 'CEO Approvals']),
         Padding(
           padding: const EdgeInsets.only(bottom: 20),
-          child: Row(
+          child: ResponsiveGrid(
             children: [
               _buildApprovalStat('Pending', '${indents.length}', AppColors.warning, Icons.hourglass_top_rounded),
-              const SizedBox(width: 16),
               _buildApprovalStat('Approved Today', '3', AppColors.success, Icons.check_circle_rounded),
-              const SizedBox(width: 16),
               _buildApprovalStat('Rejected Today', '1', AppColors.error, Icons.cancel_rounded),
-              const SizedBox(width: 16),
               _buildApprovalStat('Total Value', '\u20B94.05L', AppColors.accent, Icons.account_balance_wallet_rounded),
-            ].map((w) => Expanded(child: w)).toList(),
+            ],
           ),
         ),
-        ...indents.map((indent) => _buildIndentCard(context, indent)),
+        ...indents.map((indent) => _buildIndentCard(context, indent, isMobile)),
       ]),
     );
   }
@@ -42,31 +41,38 @@ class SuperAdminApprovalsScreen extends StatelessWidget {
       child: Row(children: [
         Container(width: 40, height: 40, decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: AppSpacing.borderRadiusMd), child: Icon(icon, size: 20, color: color)),
         const SizedBox(width: 12),
-        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(value, style: AppTypography.metricSmall), Text(label, style: AppTypography.caption)]),
+        Flexible(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(value, style: AppTypography.metricSmall, maxLines: 1, overflow: TextOverflow.ellipsis),
+          Text(label, style: AppTypography.caption, maxLines: 1, overflow: TextOverflow.ellipsis),
+        ])),
       ]),
     );
   }
 
-  Widget _buildIndentCard(BuildContext context, _Indent indent) {
+  Widget _buildIndentCard(BuildContext context, _Indent indent, bool isMobile) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(color: AppColors.surface, borderRadius: AppSpacing.borderRadiusLg, border: Border.all(color: AppColors.border), boxShadow: AppColors.shadowSm),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
-          Text(indent.id, style: AppTypography.h4.copyWith(color: AppColors.accent)),
+          Flexible(child: Text(indent.id, style: AppTypography.h4.copyWith(color: AppColors.accent), maxLines: 1, overflow: TextOverflow.ellipsis)),
           const SizedBox(width: 12), StatusBadge.priority(indent.priority),
           const SizedBox(width: 12), StatusBadge.pending(),
-          const Spacer(), Text(indent.time, style: AppTypography.caption),
+          const Spacer(), Text(indent.time, style: AppTypography.caption, maxLines: 1, overflow: TextOverflow.ellipsis),
         ]),
         const SizedBox(height: 12),
-        Text(indent.description, style: AppTypography.bodyMedium),
+        Text(indent.description, style: AppTypography.bodyMedium, maxLines: 2, overflow: TextOverflow.ellipsis),
         const SizedBox(height: 12),
-        Row(children: [
-          _detailChip(Icons.apartment_rounded, indent.college),
-          const SizedBox(width: 16), _detailChip(Icons.person_rounded, indent.requestedBy),
-          const SizedBox(width: 16), _detailChip(Icons.account_balance_wallet_rounded, indent.amount),
-        ]),
+        Wrap(
+          spacing: 16,
+          runSpacing: 8,
+          children: [
+            _detailChip(Icons.apartment_rounded, indent.college),
+            _detailChip(Icons.person_rounded, indent.requestedBy),
+            _detailChip(Icons.account_balance_wallet_rounded, indent.amount),
+          ],
+        ),
         const SizedBox(height: 16),
         Row(mainAxisAlignment: MainAxisAlignment.end, children: [
           AppButton(label: 'Reject', variant: AppButtonVariant.outlined, icon: Icons.close_rounded, size: AppButtonSize.sm, onPressed: () => _showRejectDialog(context, indent.id)),
@@ -78,7 +84,7 @@ class SuperAdminApprovalsScreen extends StatelessWidget {
   }
 
   Widget _detailChip(IconData icon, String label) => Row(mainAxisSize: MainAxisSize.min, children: [
-    Icon(icon, size: 14, color: AppColors.textTertiary), const SizedBox(width: 6), Text(label, style: AppTypography.bodySmall),
+    Icon(icon, size: 14, color: AppColors.textTertiary), const SizedBox(width: 6), Text(label, style: AppTypography.bodySmall, maxLines: 1, overflow: TextOverflow.ellipsis),
   ]);
 
   void _showRejectDialog(BuildContext context, String indentId) {

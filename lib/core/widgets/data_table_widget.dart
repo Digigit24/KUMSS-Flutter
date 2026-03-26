@@ -74,6 +74,7 @@ class _AppDataTableState extends State<AppDataTable> {
         boxShadow: AppColors.shadowSm,
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           _buildToolbar(),
           const Divider(height: 1),
@@ -96,46 +97,63 @@ class _AppDataTableState extends State<AppDataTable> {
   }
 
   Widget _buildToolbar() {
+    final isMobile =
+        MediaQuery.of(context).size.width < AppSpacing.mobileBreakpoint;
     return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        children: [
-          if (widget.onSearch != null)
-            SizedBox(
-              width: 280,
-              child: TextField(
-                controller: _searchController,
-                onChanged: widget.onSearch,
-                decoration: InputDecoration(
-                  hintText: widget.searchHint ?? 'Search...',
-                  prefixIcon: const Icon(Icons.search, size: 20),
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                  isDense: true,
-                  suffixIcon: _searchController.text.isNotEmpty
-                      ? IconButton(
-                          icon: const Icon(Icons.close, size: 18),
-                          onPressed: () {
-                            _searchController.clear();
-                            widget.onSearch?.call('');
-                          },
-                        )
-                      : null,
-                ),
-              ),
+      padding: const EdgeInsets.all(12),
+      child: isMobile
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (widget.onSearch != null)
+                  TextField(
+                    controller: _searchController,
+                    onChanged: widget.onSearch,
+                    decoration: InputDecoration(
+                      hintText: widget.searchHint ?? 'Search...',
+                      prefixIcon: const Icon(Icons.search, size: 20),
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 10),
+                      isDense: true,
+                    ),
+                  ),
+                if (widget.actions != null) ...[
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: widget.actions!,
+                  ),
+                ],
+              ],
+            )
+          : Row(
+              children: [
+                if (widget.onSearch != null)
+                  SizedBox(
+                    width: 280,
+                    child: TextField(
+                      controller: _searchController,
+                      onChanged: widget.onSearch,
+                      decoration: InputDecoration(
+                        hintText: widget.searchHint ?? 'Search...',
+                        prefixIcon: const Icon(Icons.search, size: 20),
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 10),
+                        isDense: true,
+                      ),
+                    ),
+                  ),
+                const Spacer(),
+                if (widget.actions != null)
+                  Row(
+                    children: widget.actions!
+                        .map((a) =>
+                            Padding(padding: const EdgeInsets.only(left: 8), child: a))
+                        .toList(),
+                  ),
+              ],
             ),
-          const Spacer(),
-          if (widget.actions != null)
-            Row(
-              children: widget.actions!
-                  .map((a) => Padding(
-                        padding: const EdgeInsets.only(left: 8),
-                        child: a,
-                      ))
-                  .toList(),
-            ),
-        ],
-      ),
     );
   }
 
@@ -144,9 +162,10 @@ class _AppDataTableState extends State<AppDataTable> {
       scrollDirection: Axis.horizontal,
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          minWidth: MediaQuery.of(context).size.width - 340,
+          minWidth: 600,
         ),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             _buildHeaderRow(),
             ...widget.rows.asMap().entries.map(
@@ -161,7 +180,7 @@ class _AppDataTableState extends State<AppDataTable> {
   Widget _buildHeaderRow() {
     return Container(
       color: AppColors.surfaceVariant,
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       child: Row(
         children: widget.columns.map((col) {
           final child = Text(
@@ -171,6 +190,8 @@ class _AppDataTableState extends State<AppDataTable> {
               fontWeight: FontWeight.w600,
             ),
             textAlign: col.textAlign,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           );
           if (col.width != null) {
             return SizedBox(width: col.width, child: child);
@@ -184,12 +205,14 @@ class _AppDataTableState extends State<AppDataTable> {
   Widget _buildDataRow(List<Widget> cells, int index) {
     return Container(
       decoration: BoxDecoration(
-        color: index.isEven ? AppColors.surface : AppColors.surfaceVariant.withValues(alpha: 0.3),
+        color: index.isEven
+            ? AppColors.surface
+            : AppColors.surfaceVariant.withValues(alpha: 0.3),
         border: const Border(
           bottom: BorderSide(color: AppColors.borderLight),
         ),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         children: List.generate(widget.columns.length, (i) {
           final col = widget.columns[i];
@@ -211,6 +234,7 @@ class _AppDataTableState extends State<AppDataTable> {
       padding: const EdgeInsets.all(48),
       child: Center(
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             widget.emptyIcon ??
                 Icon(
@@ -233,55 +257,27 @@ class _AppDataTableState extends State<AppDataTable> {
 
   Widget _buildPagination() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       child: Row(
         children: [
-          Text(
-            'Showing ${((widget.currentPage - 1) * widget.pageSize) + 1}'
-            '–${(widget.currentPage * widget.pageSize).clamp(0, widget.totalItems)}'
-            ' of ${widget.totalItems}',
-            style: AppTypography.caption,
+          Flexible(
+            child: Text(
+              'Showing ${((widget.currentPage - 1) * widget.pageSize) + 1}'
+              '–${(widget.currentPage * widget.pageSize).clamp(0, widget.totalItems)}'
+              ' of ${widget.totalItems}',
+              style: AppTypography.caption,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
-          const Spacer(),
+          const SizedBox(width: 8),
           Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
               _paginationButton(
                 Icons.chevron_left,
                 widget.currentPage > 1
                     ? () => widget.onPageChanged?.call(widget.currentPage - 1)
                     : null,
-              ),
-              const SizedBox(width: 4),
-              ...List.generate(
-                totalPages.clamp(0, 5),
-                (i) {
-                  final page = i + 1;
-                  final isActive = page == widget.currentPage;
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 2),
-                    child: SizedBox(
-                      width: 32,
-                      height: 32,
-                      child: TextButton(
-                        onPressed: () => widget.onPageChanged?.call(page),
-                        style: TextButton.styleFrom(
-                          backgroundColor: isActive
-                              ? AppColors.primary
-                              : Colors.transparent,
-                          foregroundColor: isActive
-                              ? AppColors.white
-                              : AppColors.textSecondary,
-                          padding: EdgeInsets.zero,
-                          minimumSize: Size.zero,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: AppSpacing.borderRadiusSm,
-                          ),
-                        ),
-                        child: Text('$page', style: AppTypography.labelMedium),
-                      ),
-                    ),
-                  );
-                },
               ),
               const SizedBox(width: 4),
               _paginationButton(
