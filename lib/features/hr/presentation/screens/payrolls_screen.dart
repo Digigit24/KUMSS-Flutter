@@ -1,0 +1,60 @@
+import 'package:flutter/material.dart';
+import '../../../../core/theme/theme_exports.dart';
+import '../../../../core/widgets/widget_exports.dart';
+
+class PayrollsScreen extends StatelessWidget {
+  const PayrollsScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final columns = [
+      const AppTableColumn(label: 'Payroll', flex: 2),
+      const AppTableColumn(label: 'Period', width: 120),
+      const AppTableColumn(label: 'Employees', width: 100),
+      const AppTableColumn(label: 'Gross', width: 120),
+      const AppTableColumn(label: 'Net', width: 120),
+      const AppTableColumn(label: 'Status', width: 110),
+      const AppTableColumn(label: 'Actions', width: 100, textAlign: TextAlign.center),
+    ];
+
+    final payrolls = [
+      ['March 2026 - All Staff', 'Mar 2026', '526', '\u20B91,85,00,000', '\u20B91,52,00,000', 'draft'],
+      ['February 2026 - All Staff', 'Feb 2026', '524', '\u20B91,82,00,000', '\u20B91,49,00,000', 'processed'],
+      ['January 2026 - All Staff', 'Jan 2026', '520', '\u20B91,80,00,000', '\u20B91,48,00,000', 'completed'],
+      ['December 2025 - All Staff', 'Dec 2025', '518', '\u20B91,78,00,000', '\u20B91,46,00,000', 'completed'],
+    ];
+
+    return SingleChildScrollView(
+      padding: AppSpacing.pagePadding,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          PageHeader(
+            title: 'Payrolls',
+            subtitle: 'Generate and process monthly payrolls',
+            breadcrumbs: const ['Home', 'HR', 'Payrolls'],
+            actions: [AppButton(label: 'Generate Payroll', icon: Icons.add_rounded, onPressed: () {})],
+          ),
+          AppDataTable(
+            columns: columns,
+            rows: payrolls.map((p) => [
+              Text(p[0], style: AppTypography.labelLarge),
+              Text(p[1], style: AppTypography.bodySmall),
+              Text(p[2], style: AppTypography.bodySmall),
+              Text(p[3], style: AppTypography.bodySmall),
+              Text(p[4], style: AppTypography.labelLarge.copyWith(color: AppColors.success)),
+              StatusBadge(label: (p[5] as String)[0].toUpperCase() + (p[5] as String).substring(1),
+                color: p[5] == 'completed' ? AppColors.success : p[5] == 'processed' ? AppColors.info : AppColors.warning),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                IconButton(icon: const Icon(Icons.visibility_rounded, size: 18), onPressed: () {}, style: IconButton.styleFrom(foregroundColor: AppColors.textSecondary)),
+                if (p[5] == 'draft') IconButton(icon: const Icon(Icons.play_arrow_rounded, size: 18), onPressed: () {}, tooltip: 'Process', style: IconButton.styleFrom(foregroundColor: AppColors.success)),
+              ]),
+            ]).toList(),
+            totalItems: payrolls.length,
+            onSearch: (_) {},
+          ),
+        ],
+      ),
+    );
+  }
+}

@@ -1,0 +1,60 @@
+import 'package:flutter/material.dart';
+import '../../../../core/theme/theme_exports.dart';
+import '../../../../core/widgets/widget_exports.dart';
+
+class SubjectsScreen extends StatelessWidget {
+  const SubjectsScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final columns = [
+      const AppTableColumn(label: 'Subject', flex: 2),
+      const AppTableColumn(label: 'Code', width: 100),
+      const AppTableColumn(label: 'Program', flex: 1),
+      const AppTableColumn(label: 'Credits', width: 80),
+      const AppTableColumn(label: 'Type', width: 100),
+      const AppTableColumn(label: 'Actions', width: 100, textAlign: TextAlign.center),
+    ];
+
+    final subjects = [
+      ['Data Structures & Algorithms', 'CS201', 'B.Tech CS', '4', 'Core'],
+      ['Database Management Systems', 'CS301', 'B.Tech CS', '4', 'Core'],
+      ['Machine Learning', 'CS401', 'B.Tech CS', '3', 'Elective'],
+      ['Human Anatomy', 'MD101', 'MBBS', '5', 'Core'],
+      ['Business Analytics', 'BA201', 'MBA', '3', 'Core'],
+      ['Constitutional Law I', 'LW101', 'LLB', '4', 'Core'],
+      ['Quantum Physics', 'PH301', 'B.Sc Physics', '3', 'Core'],
+    ];
+
+    return SingleChildScrollView(
+      padding: AppSpacing.pagePadding,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          PageHeader(
+            title: 'Subjects',
+            subtitle: 'Maintain the subject catalog',
+            breadcrumbs: const ['Home', 'Academic', 'Subjects'],
+            actions: [AppButton(label: 'Add Subject', icon: Icons.add_rounded, onPressed: () {})],
+          ),
+          AppDataTable(
+            columns: columns,
+            rows: subjects.map((s) => [
+              Text(s[0], style: AppTypography.labelLarge),
+              Text(s[1], style: AppTypography.bodySmall.copyWith(fontWeight: FontWeight.w600, color: AppColors.accent)),
+              Text(s[2], style: AppTypography.bodySmall),
+              Text(s[3], style: AppTypography.bodySmall),
+              StatusBadge(label: s[4], color: s[4] == 'Core' ? AppColors.info : AppColors.secondary),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                IconButton(icon: const Icon(Icons.edit_rounded, size: 18), onPressed: () {}, style: IconButton.styleFrom(foregroundColor: AppColors.textSecondary)),
+                IconButton(icon: const Icon(Icons.delete_outline_rounded, size: 18), onPressed: () {}, style: IconButton.styleFrom(foregroundColor: AppColors.error)),
+              ]),
+            ]).toList(),
+            totalItems: subjects.length,
+            onSearch: (_) {},
+          ),
+        ],
+      ),
+    );
+  }
+}
