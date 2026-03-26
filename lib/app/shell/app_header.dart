@@ -37,7 +37,7 @@ class AppHeader extends StatelessWidget {
               padding: EdgeInsets.zero,
               constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
             ),
-          if (!isMobile) _buildCollegeSelector(context),
+          Flexible(child: _buildCollegeSelector(context)),
           const Spacer(),
           if (!isMobile) ...[
             IconButton(
