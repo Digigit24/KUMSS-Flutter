@@ -25,7 +25,22 @@ class ClassesScreen extends StatelessWidget {
       padding: AppSpacing.pagePadding,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         PageHeader(title: 'Classes', subtitle: 'Set up class batches and year groups', breadcrumbs: const ['Home', 'Academic', 'Classes'],
-          actions: [AppButton(label: 'Add Class', icon: Icons.add_rounded, onPressed: () {})]),
+          actions: [AppButton(label: 'Add Class', icon: Icons.add_rounded, onPressed: () => AppFormSheet.show(
+            context,
+            title: 'Add Class',
+            subtitle: 'Set up a new class batch or year group',
+            submitLabel: 'Create Class',
+            submitIcon: Icons.add_rounded,
+            fields: [
+              TextField(decoration: const InputDecoration(labelText: 'Class Name', hintText: 'e.g. B.Tech CSE - Year 1')),
+              DropdownButtonFormField<String>(
+                decoration: const InputDecoration(labelText: 'Program'),
+                items: ['B.Tech CS', 'MBBS', 'MBA', 'B.Tech EE'].map((p) => DropdownMenuItem(value: p, child: Text(p))).toList(),
+                onChanged: (_) {},
+              ),
+              TextField(decoration: const InputDecoration(labelText: 'Year / Batch', hintText: 'e.g. 2025-26')),
+            ],
+          ))]),
         AppDataTable(
           columns: columns,
           rows: classes.map((c) => [

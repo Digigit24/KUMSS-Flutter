@@ -23,7 +23,23 @@ class MessageTemplatesScreen extends StatelessWidget {
             title: 'Message Templates',
             subtitle: 'Manage reusable message templates',
             breadcrumbs: const ['Home', 'Communication', 'Templates'],
-            actions: [AppButton(label: 'Create Template', icon: Icons.add_rounded, onPressed: () {})],
+            actions: [AppButton(label: 'Create Template', icon: Icons.add_rounded, onPressed: () => AppFormSheet.show(
+              context,
+              title: 'Create Template',
+              subtitle: 'Create a reusable message template',
+              submitLabel: 'Create Template',
+              submitIcon: Icons.add_rounded,
+              fields: [
+                TextField(decoration: const InputDecoration(labelText: 'Template Name', hintText: 'e.g. Fee Payment Reminder')),
+                DropdownButtonFormField<String>(
+                  decoration: const InputDecoration(labelText: 'Channel'),
+                  items: ['SMS', 'Email', 'Push', 'All'].map((c) => DropdownMenuItem(value: c, child: Text(c))).toList(),
+                  onChanged: (_) {},
+                ),
+                TextField(decoration: const InputDecoration(labelText: 'Description', hintText: 'Describe the template purpose')),
+                TextField(maxLines: 4, decoration: const InputDecoration(labelText: 'Template Body', hintText: 'Enter template content', alignLabelWithHint: true)),
+              ],
+            ))],
           ),
           GridView.builder(
             shrinkWrap: true,

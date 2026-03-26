@@ -32,7 +32,28 @@ class TransactionsScreen extends StatelessWidget {
             breadcrumbs: const ['Home', 'Finance', 'Transactions'],
             actions: [
               AppButton(label: 'Export', icon: Icons.download_rounded, variant: AppButtonVariant.outlined, onPressed: () {}),
-              AppButton(label: 'Add Transaction', icon: Icons.add_rounded, onPressed: () {}),
+              AppButton(label: 'Add Transaction', icon: Icons.add_rounded, onPressed: () => AppFormSheet.show(
+                context,
+                title: 'Add Transaction',
+                subtitle: 'Record a new financial transaction',
+                submitLabel: 'Add Transaction',
+                submitIcon: Icons.add_rounded,
+                fields: [
+                  TextField(decoration: const InputDecoration(labelText: 'Description', hintText: 'e.g. Fee Payment - Student Name')),
+                  DropdownButtonFormField<String>(
+                    decoration: const InputDecoration(labelText: 'Type'),
+                    items: ['Income', 'Expense'].map((t) => DropdownMenuItem(value: t, child: Text(t))).toList(),
+                    onChanged: (_) {},
+                  ),
+                  DropdownButtonFormField<String>(
+                    decoration: const InputDecoration(labelText: 'College'),
+                    items: ['Engineering', 'Medicine', 'Business', 'All'].map((c) => DropdownMenuItem(value: c, child: Text(c))).toList(),
+                    onChanged: (_) {},
+                  ),
+                  TextField(decoration: const InputDecoration(labelText: 'Amount', hintText: 'e.g. 45000'), keyboardType: TextInputType.number),
+                  TextField(decoration: const InputDecoration(labelText: 'Date', hintText: 'e.g. Mar 25, 2026')),
+                ],
+              )),
             ],
           ),
           AppDataTable(

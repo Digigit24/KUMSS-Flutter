@@ -23,7 +23,19 @@ class SalaryStructuresScreen extends StatelessWidget {
             title: 'Salary Structures',
             subtitle: 'Define salary structure templates',
             breadcrumbs: const ['Home', 'HR', 'Salary Structures'],
-            actions: [AppButton(label: 'Create Structure', icon: Icons.add_rounded, onPressed: () {})],
+            actions: [AppButton(label: 'Create Structure', icon: Icons.add_rounded, onPressed: () => AppFormSheet.show(
+              context,
+              title: 'Create Structure',
+              subtitle: 'Define a new salary structure template',
+              submitLabel: 'Create Structure',
+              submitIcon: Icons.add_rounded,
+              fields: [
+                TextField(decoration: const InputDecoration(labelText: 'Structure Name', hintText: 'e.g. Professor Grade')),
+                TextField(decoration: const InputDecoration(labelText: 'Min Salary', hintText: 'e.g. 120000'), keyboardType: TextInputType.number),
+                TextField(decoration: const InputDecoration(labelText: 'Max Salary', hintText: 'e.g. 150000'), keyboardType: TextInputType.number),
+                TextField(decoration: const InputDecoration(labelText: 'Description', hintText: 'Describe this salary structure')),
+              ],
+            ))],
           ),
           GridView.builder(
             shrinkWrap: true,

@@ -38,7 +38,40 @@ class TimetablesScreen extends StatelessWidget {
             breadcrumbs: const ['Home', 'Academic', 'Timetables'],
             actions: [
               AppButton(label: 'Auto Generate', icon: Icons.auto_fix_high_rounded, variant: AppButtonVariant.outlined, onPressed: () {}),
-              AppButton(label: 'Add Slot', icon: Icons.add_rounded, onPressed: () {}),
+              AppButton(label: 'Add Slot', icon: Icons.add_rounded, onPressed: () => AppFormSheet.show(
+                context,
+                title: 'Add Slot',
+                subtitle: 'Add a new timetable slot',
+                submitLabel: 'Add Slot',
+                submitIcon: Icons.add_rounded,
+                fields: [
+                  DropdownButtonFormField<String>(
+                    decoration: const InputDecoration(labelText: 'Day'),
+                    items: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((d) => DropdownMenuItem(value: d, child: Text(d))).toList(),
+                    onChanged: (_) {},
+                  ),
+                  DropdownButtonFormField<String>(
+                    decoration: const InputDecoration(labelText: 'Time'),
+                    items: ['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM'].map((t) => DropdownMenuItem(value: t, child: Text(t))).toList(),
+                    onChanged: (_) {},
+                  ),
+                  DropdownButtonFormField<String>(
+                    decoration: const InputDecoration(labelText: 'Subject'),
+                    items: ['DS & Algo', 'DBMS', 'Networks', 'ML', 'ML Lab', 'DBMS Lab'].map((s) => DropdownMenuItem(value: s, child: Text(s))).toList(),
+                    onChanged: (_) {},
+                  ),
+                  DropdownButtonFormField<String>(
+                    decoration: const InputDecoration(labelText: 'Teacher'),
+                    items: ['Dr. Verma', 'Prof. Rao', 'Dr. Kumar', 'Dr. Nair', 'Dr. Reddy'].map((t) => DropdownMenuItem(value: t, child: Text(t))).toList(),
+                    onChanged: (_) {},
+                  ),
+                  DropdownButtonFormField<String>(
+                    decoration: const InputDecoration(labelText: 'Room'),
+                    items: ['Room 101', 'Room 201', 'Lab 301', 'Room 102'].map((r) => DropdownMenuItem(value: r, child: Text(r))).toList(),
+                    onChanged: (_) {},
+                  ),
+                ],
+              )),
             ],
           ),
           // Class selector

@@ -25,7 +25,28 @@ class SubjectsScreen extends StatelessWidget {
       padding: AppSpacing.pagePadding,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         PageHeader(title: 'Subjects', subtitle: 'Maintain the subject catalog', breadcrumbs: const ['Home', 'Academic', 'Subjects'],
-          actions: [AppButton(label: 'Add Subject', icon: Icons.add_rounded, onPressed: () {})]),
+          actions: [AppButton(label: 'Add Subject', icon: Icons.add_rounded, onPressed: () => AppFormSheet.show(
+            context,
+            title: 'Add Subject',
+            subtitle: 'Add a new subject to the catalog',
+            submitLabel: 'Create Subject',
+            submitIcon: Icons.add_rounded,
+            fields: [
+              TextField(decoration: const InputDecoration(labelText: 'Subject Name', hintText: 'e.g. Data Structures & Algorithms')),
+              TextField(decoration: const InputDecoration(labelText: 'Subject Code', hintText: 'e.g. CS201')),
+              DropdownButtonFormField<String>(
+                decoration: const InputDecoration(labelText: 'Program'),
+                items: ['B.Tech CS', 'MBBS', 'MBA', 'B.Tech EE'].map((p) => DropdownMenuItem(value: p, child: Text(p))).toList(),
+                onChanged: (_) {},
+              ),
+              TextField(decoration: const InputDecoration(labelText: 'Credits', hintText: 'e.g. 4'), keyboardType: TextInputType.number),
+              DropdownButtonFormField<String>(
+                decoration: const InputDecoration(labelText: 'Type'),
+                items: ['Core', 'Elective'].map((t) => DropdownMenuItem(value: t, child: Text(t))).toList(),
+                onChanged: (_) {},
+              ),
+            ],
+          ))]),
         AppDataTable(
           columns: columns,
           rows: subjects.map((s) => [

@@ -25,7 +25,31 @@ class ProgramsScreen extends StatelessWidget {
       padding: AppSpacing.pagePadding,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         PageHeader(title: 'Programs', subtitle: 'Manage degree and diploma programs', breadcrumbs: const ['Home', 'Academic', 'Programs'],
-          actions: [AppButton(label: 'Add Program', icon: Icons.add_rounded, onPressed: () {})]),
+          actions: [AppButton(label: 'Add Program', icon: Icons.add_rounded, onPressed: () => AppFormSheet.show(
+            context,
+            title: 'Add Program',
+            subtitle: 'Create a new degree or diploma program',
+            submitLabel: 'Create Program',
+            submitIcon: Icons.add_rounded,
+            fields: [
+              TextField(decoration: const InputDecoration(labelText: 'Program Name', hintText: 'e.g. B.Tech Computer Science')),
+              DropdownButtonFormField<String>(
+                decoration: const InputDecoration(labelText: 'Faculty'),
+                items: ['Computing & Informatics', 'Clinical Sciences', 'Electrical Engineering', 'Mechanical Engineering'].map((f) => DropdownMenuItem(value: f, child: Text(f))).toList(),
+                onChanged: (_) {},
+              ),
+              DropdownButtonFormField<String>(
+                decoration: const InputDecoration(labelText: 'Duration'),
+                items: ['2 Years', '3 Years', '4 Years', '5 Years'].map((d) => DropdownMenuItem(value: d, child: Text(d))).toList(),
+                onChanged: (_) {},
+              ),
+              DropdownButtonFormField<String>(
+                decoration: const InputDecoration(labelText: 'Type'),
+                items: ['Undergraduate', 'Postgraduate'].map((t) => DropdownMenuItem(value: t, child: Text(t))).toList(),
+                onChanged: (_) {},
+              ),
+            ],
+          ))]),
         AppDataTable(
           columns: columns,
           rows: programs.map((p) => [

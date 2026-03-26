@@ -25,7 +25,23 @@ class SectionsScreen extends StatelessWidget {
       padding: AppSpacing.pagePadding,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         PageHeader(title: 'Sections', subtitle: 'Divide classes into sections', breadcrumbs: const ['Home', 'Academic', 'Sections'],
-          actions: [AppButton(label: 'Add Section', icon: Icons.add_rounded, onPressed: () {})]),
+          actions: [AppButton(label: 'Add Section', icon: Icons.add_rounded, onPressed: () => AppFormSheet.show(
+            context,
+            title: 'Add Section',
+            subtitle: 'Create a new section within a class',
+            submitLabel: 'Create Section',
+            submitIcon: Icons.add_rounded,
+            fields: [
+              TextField(decoration: const InputDecoration(labelText: 'Section Name', hintText: 'e.g. A, B')),
+              DropdownButtonFormField<String>(
+                decoration: const InputDecoration(labelText: 'Class'),
+                items: ['B.Tech CSE - Year 1', 'B.Tech CSE - Year 2', 'MBBS - Year 1'].map((c) => DropdownMenuItem(value: c, child: Text(c))).toList(),
+                onChanged: (_) {},
+              ),
+              TextField(decoration: const InputDecoration(labelText: 'Class Teacher', hintText: 'e.g. Dr. Abebe Kebede')),
+              TextField(decoration: const InputDecoration(labelText: 'Capacity', hintText: 'e.g. 60'), keyboardType: TextInputType.number),
+            ],
+          ))]),
         AppDataTable(
           columns: columns,
           rows: sections.map((s) => [

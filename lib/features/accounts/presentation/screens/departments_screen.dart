@@ -25,7 +25,22 @@ class DepartmentsScreen extends StatelessWidget {
       padding: AppSpacing.pagePadding,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         PageHeader(title: 'Department Management', subtitle: 'Create and manage organizational departments', breadcrumbs: const ['Home', 'Accounts', 'Departments'],
-          actions: [AppButton(label: 'Add Department', icon: Icons.add_rounded, onPressed: () {})]),
+          actions: [AppButton(label: 'Add Department', icon: Icons.add_rounded, onPressed: () => AppFormSheet.show(
+            context,
+            title: 'Add Department',
+            subtitle: 'Create a new organizational department',
+            submitLabel: 'Create Department',
+            submitIcon: Icons.add_rounded,
+            fields: [
+              TextField(decoration: const InputDecoration(labelText: 'Department Name', hintText: 'e.g. Computer Science & Engineering')),
+              DropdownButtonFormField<String>(
+                decoration: const InputDecoration(labelText: 'College'),
+                items: ['Engineering', 'Medicine', 'Business', 'Law'].map((c) => DropdownMenuItem(value: c, child: Text(c))).toList(),
+                onChanged: (_) {},
+              ),
+              TextField(decoration: const InputDecoration(labelText: 'Head', hintText: 'e.g. Dr. Abebe Kebede')),
+            ],
+          ))]),
         AppDataTable(
           columns: columns,
           rows: departments.map((d) => [

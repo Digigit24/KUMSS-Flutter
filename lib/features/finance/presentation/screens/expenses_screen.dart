@@ -30,7 +30,28 @@ class ExpensesScreen extends StatelessWidget {
             title: 'Other Expenses',
             subtitle: 'Track miscellaneous expenses',
             breadcrumbs: const ['Home', 'Finance', 'Other Expenses'],
-            actions: [AppButton(label: 'Add Expense', icon: Icons.add_rounded, onPressed: () {})],
+            actions: [AppButton(label: 'Add Expense', icon: Icons.add_rounded, onPressed: () => AppFormSheet.show(
+              context,
+              title: 'Add Expense',
+              subtitle: 'Record a new expense',
+              submitLabel: 'Add Expense',
+              submitIcon: Icons.add_rounded,
+              fields: [
+                TextField(decoration: const InputDecoration(labelText: 'Expense Title', hintText: 'e.g. Office Supplies Purchase')),
+                DropdownButtonFormField<String>(
+                  decoration: const InputDecoration(labelText: 'Category'),
+                  items: ['Administrative', 'Utilities', 'Maintenance', 'Travel', 'Equipment'].map((c) => DropdownMenuItem(value: c, child: Text(c))).toList(),
+                  onChanged: (_) {},
+                ),
+                DropdownButtonFormField<String>(
+                  decoration: const InputDecoration(labelText: 'College'),
+                  items: ['Engineering', 'Medicine', 'Business', 'All'].map((c) => DropdownMenuItem(value: c, child: Text(c))).toList(),
+                  onChanged: (_) {},
+                ),
+                TextField(decoration: const InputDecoration(labelText: 'Amount', hintText: 'e.g. 15400'), keyboardType: TextInputType.number),
+                TextField(decoration: const InputDecoration(labelText: 'Date', hintText: 'e.g. Mar 25, 2026')),
+              ],
+            ))],
           ),
           AppDataTable(
             columns: columns,

@@ -25,7 +25,22 @@ class FacultiesScreen extends StatelessWidget {
       padding: AppSpacing.pagePadding,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         PageHeader(title: 'Faculties', subtitle: 'Manage academic faculties across colleges', breadcrumbs: const ['Home', 'Academic', 'Faculties'],
-          actions: [AppButton(label: 'Add Faculty', icon: Icons.add_rounded, onPressed: () {})]),
+          actions: [AppButton(label: 'Add Faculty', icon: Icons.add_rounded, onPressed: () => AppFormSheet.show(
+            context,
+            title: 'Add Faculty',
+            subtitle: 'Create a new academic faculty',
+            submitLabel: 'Create Faculty',
+            submitIcon: Icons.add_rounded,
+            fields: [
+              TextField(decoration: const InputDecoration(labelText: 'Faculty Name', hintText: 'e.g. Faculty of Computing')),
+              DropdownButtonFormField<String>(
+                decoration: const InputDecoration(labelText: 'College'),
+                items: ['Engineering', 'Medicine', 'Business', 'Law'].map((c) => DropdownMenuItem(value: c, child: Text(c))).toList(),
+                onChanged: (_) {},
+              ),
+              TextField(decoration: const InputDecoration(labelText: 'Dean', hintText: 'e.g. Dr. Abebe Kebede')),
+            ],
+          ))]),
         AppDataTable(
           columns: columns,
           rows: faculties.map((f) => [

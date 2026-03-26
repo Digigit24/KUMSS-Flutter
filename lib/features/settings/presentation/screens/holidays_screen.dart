@@ -29,7 +29,22 @@ class HolidaysScreen extends StatelessWidget {
             title: 'Holiday Calendar',
             subtitle: 'Define holidays for academic calendar',
             breadcrumbs: const ['Home', 'Settings', 'Holidays'],
-            actions: [AppButton(label: 'Add Holiday', icon: Icons.add_rounded, onPressed: () {})],
+            actions: [AppButton(label: 'Add Holiday', icon: Icons.add_rounded, onPressed: () => AppFormSheet.show(
+              context,
+              title: 'Add Holiday',
+              subtitle: 'Add a new holiday to the calendar',
+              submitLabel: 'Add Holiday',
+              submitIcon: Icons.add_rounded,
+              fields: [
+                TextField(decoration: const InputDecoration(labelText: 'Holiday Name', hintText: 'e.g. Ethiopian New Year')),
+                TextField(decoration: const InputDecoration(labelText: 'Date', hintText: 'e.g. Sep 11, 2026')),
+                DropdownButtonFormField<String>(
+                  decoration: const InputDecoration(labelText: 'Type'),
+                  items: ['National', 'Festival', 'Religious'].map((t) => DropdownMenuItem(value: t, child: Text(t))).toList(),
+                  onChanged: (_) {},
+                ),
+              ],
+            ))],
           ),
           AppDataTable(
             columns: columns,

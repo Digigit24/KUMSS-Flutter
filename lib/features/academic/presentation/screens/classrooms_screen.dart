@@ -37,7 +37,24 @@ class ClassroomsScreen extends StatelessWidget {
             title: 'Classrooms',
             subtitle: 'Manage physical classrooms and venues',
             breadcrumbs: const ['Home', 'Academic', 'Classrooms'],
-            actions: [AppButton(label: 'Add Room', icon: Icons.add_rounded, onPressed: () {})],
+            actions: [AppButton(label: 'Add Room', icon: Icons.add_rounded, onPressed: () => AppFormSheet.show(
+              context,
+              title: 'Add Room',
+              subtitle: 'Register a new classroom or venue',
+              submitLabel: 'Create Room',
+              submitIcon: Icons.add_rounded,
+              fields: [
+                TextField(decoration: const InputDecoration(labelText: 'Room Number', hintText: 'e.g. Room 101')),
+                TextField(decoration: const InputDecoration(labelText: 'Building', hintText: 'e.g. Block A')),
+                DropdownButtonFormField<String>(
+                  decoration: const InputDecoration(labelText: 'Type'),
+                  items: ['Classroom', 'Lab', 'Seminar Hall'].map((t) => DropdownMenuItem(value: t, child: Text(t))).toList(),
+                  onChanged: (_) {},
+                ),
+                TextField(decoration: const InputDecoration(labelText: 'Capacity', hintText: 'e.g. 60'), keyboardType: TextInputType.number),
+                TextField(decoration: const InputDecoration(labelText: 'Facilities', hintText: 'e.g. Projector, AC, Mic')),
+              ],
+            ))],
           ),
           AppDataTable(
             columns: columns,

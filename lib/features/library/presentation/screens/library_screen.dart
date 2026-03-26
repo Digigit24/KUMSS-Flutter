@@ -29,7 +29,24 @@ class LibraryScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           PageHeader(title: 'Library Management', subtitle: 'Book catalog, issues, returns, and fine management', breadcrumbs: const ['Home', 'Library'],
-            actions: [AppButton(label: 'Add Book', icon: Icons.add_rounded, onPressed: () {})]),
+            actions: [AppButton(label: 'Add Book', icon: Icons.add_rounded, onPressed: () => AppFormSheet.show(
+              context,
+              title: 'Add Book',
+              subtitle: 'Add a new book to the catalog',
+              submitLabel: 'Add Book',
+              submitIcon: Icons.add_rounded,
+              fields: [
+                TextField(decoration: const InputDecoration(labelText: 'Book Title', hintText: 'e.g. Introduction to Algorithms')),
+                TextField(decoration: const InputDecoration(labelText: 'Author', hintText: 'e.g. Cormen et al.')),
+                TextField(decoration: const InputDecoration(labelText: 'ISBN', hintText: 'e.g. 978-0-262-03384-8')),
+                DropdownButtonFormField<String>(
+                  decoration: const InputDecoration(labelText: 'Category'),
+                  items: ['Computer Science', 'Medicine', 'Engineering', 'Business', 'General'].map((c) => DropdownMenuItem(value: c, child: Text(c))).toList(),
+                  onChanged: (_) {},
+                ),
+                TextField(decoration: const InputDecoration(labelText: 'Total Copies', hintText: 'e.g. 15'), keyboardType: TextInputType.number),
+              ],
+            ))]),
           ResponsiveGrid(children: [
             MetricCard(label: 'Total Books', value: '4,580', icon: Icons.menu_book_rounded, iconColor: AppColors.accent, iconBgColor: AppColors.accentSurface),
             MetricCard(label: 'Issued', value: '240', icon: Icons.bookmark_rounded, iconColor: AppColors.success, iconBgColor: AppColors.successSurface),

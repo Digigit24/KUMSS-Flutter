@@ -30,7 +30,23 @@ class DeductionsScreen extends StatelessWidget {
             title: 'Deductions',
             subtitle: 'Configure payroll deductions',
             breadcrumbs: const ['Home', 'HR', 'Deductions'],
-            actions: [AppButton(label: 'Add Deduction', icon: Icons.add_rounded, onPressed: () {})],
+            actions: [AppButton(label: 'Add Deduction', icon: Icons.add_rounded, onPressed: () => AppFormSheet.show(
+              context,
+              title: 'Add Deduction',
+              subtitle: 'Configure a new payroll deduction',
+              submitLabel: 'Create Deduction',
+              submitIcon: Icons.add_rounded,
+              fields: [
+                TextField(decoration: const InputDecoration(labelText: 'Deduction Name', hintText: 'e.g. Provident Fund')),
+                DropdownButtonFormField<String>(
+                  decoration: const InputDecoration(labelText: 'Type'),
+                  items: ['Percentage', 'Fixed'].map((t) => DropdownMenuItem(value: t, child: Text(t))).toList(),
+                  onChanged: (_) {},
+                ),
+                TextField(decoration: const InputDecoration(labelText: 'Rate / Amount', hintText: 'e.g. 12% or 200')),
+                TextField(decoration: const InputDecoration(labelText: 'Applies To', hintText: 'e.g. All Employees')),
+              ],
+            ))],
           ),
           AppDataTable(
             columns: columns,

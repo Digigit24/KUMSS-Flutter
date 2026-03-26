@@ -30,7 +30,27 @@ class NoticesScreen extends StatelessWidget {
             title: 'Notices',
             subtitle: 'Broadcast notices to users',
             breadcrumbs: const ['Home', 'Communication', 'Notices'],
-            actions: [AppButton(label: 'Create Notice', icon: Icons.add_rounded, onPressed: () {})],
+            actions: [AppButton(label: 'Create Notice', icon: Icons.add_rounded, onPressed: () => AppFormSheet.show(
+              context,
+              title: 'Create Notice',
+              subtitle: 'Broadcast a new notice',
+              submitLabel: 'Publish Notice',
+              submitIcon: Icons.add_rounded,
+              fields: [
+                TextField(decoration: const InputDecoration(labelText: 'Notice Title', hintText: 'e.g. Exam Schedule for April 2026')),
+                DropdownButtonFormField<String>(
+                  decoration: const InputDecoration(labelText: 'Target'),
+                  items: ['All', 'Students', 'Staff'].map((t) => DropdownMenuItem(value: t, child: Text(t))).toList(),
+                  onChanged: (_) {},
+                ),
+                DropdownButtonFormField<String>(
+                  decoration: const InputDecoration(labelText: 'Priority'),
+                  items: ['Low', 'Medium', 'High', 'Urgent'].map((p) => DropdownMenuItem(value: p, child: Text(p))).toList(),
+                  onChanged: (_) {},
+                ),
+                TextField(maxLines: 4, decoration: const InputDecoration(labelText: 'Content', hintText: 'Enter notice content', alignLabelWithHint: true)),
+              ],
+            ))],
           ),
           AppDataTable(
             columns: columns,

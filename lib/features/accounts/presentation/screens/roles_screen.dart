@@ -23,7 +23,22 @@ class RolesScreen extends StatelessWidget {
             title: 'Role Management',
             subtitle: 'Define and manage roles with specific permission sets',
             breadcrumbs: const ['Home', 'Accounts', 'Roles'],
-            actions: [AppButton(label: 'Create Role', icon: Icons.add_rounded, onPressed: () {})],
+            actions: [AppButton(label: 'Create Role', icon: Icons.add_rounded, onPressed: () => AppFormSheet.show(
+              context,
+              title: 'Create Role',
+              subtitle: 'Define a new role with permissions',
+              submitLabel: 'Create Role',
+              submitIcon: Icons.add_rounded,
+              fields: [
+                TextField(decoration: const InputDecoration(labelText: 'Role Name', hintText: 'e.g. Department Head')),
+                TextField(decoration: const InputDecoration(labelText: 'Description', hintText: 'Describe the role responsibilities')),
+                DropdownButtonFormField<String>(
+                  decoration: const InputDecoration(labelText: 'Scope'),
+                  items: ['Global', 'College'].map((s) => DropdownMenuItem(value: s, child: Text(s))).toList(),
+                  onChanged: (_) {},
+                ),
+              ],
+            ))],
           ),
           GridView.builder(
             shrinkWrap: true,

@@ -20,7 +20,24 @@ class HostelScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           PageHeader(title: 'Hostel Management', subtitle: 'Hostel setup, room allocation, and fee management', breadcrumbs: const ['Home', 'Hostel'],
-            actions: [AppButton(label: 'Add Hostel', icon: Icons.add_rounded, onPressed: () {})]),
+            actions: [AppButton(label: 'Add Hostel', icon: Icons.add_rounded, onPressed: () => AppFormSheet.show(
+              context,
+              title: 'Add Hostel',
+              subtitle: 'Register a new hostel facility',
+              submitLabel: 'Create Hostel',
+              submitIcon: Icons.add_rounded,
+              fields: [
+                TextField(decoration: const InputDecoration(labelText: 'Hostel Name', hintText: 'e.g. Boys Hostel A')),
+                DropdownButtonFormField<String>(
+                  decoration: const InputDecoration(labelText: 'College'),
+                  items: ['Engineering', 'Medicine', 'Business', 'All'].map((c) => DropdownMenuItem(value: c, child: Text(c))).toList(),
+                  onChanged: (_) {},
+                ),
+                TextField(decoration: const InputDecoration(labelText: 'Capacity', hintText: 'e.g. 200'), keyboardType: TextInputType.number),
+                TextField(decoration: const InputDecoration(labelText: 'Warden Name', hintText: 'e.g. Mr. Dawit Getachew')),
+                TextField(decoration: const InputDecoration(labelText: 'Warden Contact', hintText: 'e.g. +251 911 123 456'), keyboardType: TextInputType.phone),
+              ],
+            ))]),
           ResponsiveGrid(children: [
             MetricCard(label: 'Total Rooms', value: '380', icon: Icons.hotel_rounded, iconColor: AppColors.accent, iconBgColor: AppColors.accentSurface),
             MetricCard(label: 'Occupied', value: '360', icon: Icons.bed_rounded, iconColor: AppColors.success, iconBgColor: AppColors.successSurface, trend: '95%', trendUp: true),

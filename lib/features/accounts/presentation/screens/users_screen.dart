@@ -32,7 +32,24 @@ class UsersScreen extends StatelessWidget {
             breadcrumbs: const ['Home', 'Accounts', 'Users'],
             actions: [
               AppButton(label: 'Export', icon: Icons.download_rounded, variant: AppButtonVariant.outlined, onPressed: () {}),
-              AppButton(label: 'Add User', icon: Icons.person_add_rounded, onPressed: () => _showAddUserDialog(context)),
+              AppButton(label: 'Add User', icon: Icons.person_add_rounded, onPressed: () => AppFormSheet.show(
+                context,
+                title: 'Add User',
+                subtitle: 'Create a new user account',
+                submitLabel: 'Create User',
+                submitIcon: Icons.person_add_rounded,
+                fields: [
+                  TextField(decoration: const InputDecoration(labelText: 'First Name', hintText: 'Enter first name')),
+                  TextField(decoration: const InputDecoration(labelText: 'Last Name', hintText: 'Enter last name')),
+                  TextField(decoration: const InputDecoration(labelText: 'Email', hintText: 'user@kumss.edu.et')),
+                  DropdownButtonFormField<String>(
+                    decoration: const InputDecoration(labelText: 'User Type'),
+                    items: ['Super Admin', 'College Admin', 'Teacher', 'Student', 'Staff'].map((t) => DropdownMenuItem(value: t, child: Text(t))).toList(),
+                    onChanged: (_) {},
+                  ),
+                  TextField(decoration: const InputDecoration(labelText: 'Password', hintText: 'Enter password'), obscureText: true),
+                ],
+              )),
             ],
           ),
           Padding(
@@ -80,30 +97,4 @@ class UsersScreen extends StatelessWidget {
     return StatusBadge(label: label, color: color);
   }
 
-  void _showAddUserDialog(BuildContext context) {
-    showDialog(context: context, builder: (_) => AlertDialog(
-      title: const Text('Add New User'),
-      content: SizedBox(width: 520, child: Column(mainAxisSize: MainAxisSize.min, children: [
-        Row(children: [
-          Expanded(child: TextField(decoration: const InputDecoration(labelText: 'First Name'))),
-          const SizedBox(width: 16),
-          Expanded(child: TextField(decoration: const InputDecoration(labelText: 'Last Name'))),
-        ]),
-        const SizedBox(height: 16),
-        TextField(decoration: const InputDecoration(labelText: 'Email', hintText: 'user@kumss.edu.et')),
-        const SizedBox(height: 16),
-        DropdownButtonFormField<String>(
-          decoration: const InputDecoration(labelText: 'User Type'),
-          items: ['super_admin', 'college_admin', 'teacher', 'student', 'staff'].map((t) => DropdownMenuItem(value: t, child: Text(t.replaceAll('_', ' ')))).toList(),
-          onChanged: (_) {},
-        ),
-        const SizedBox(height: 16),
-        TextField(decoration: const InputDecoration(labelText: 'Password')),
-      ])),
-      actions: [
-        OutlinedButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
-        ElevatedButton(onPressed: () => Navigator.pop(context), child: const Text('Create User')),
-      ],
-    ));
-  }
 }

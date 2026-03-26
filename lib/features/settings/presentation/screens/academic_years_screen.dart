@@ -30,7 +30,19 @@ class AcademicYearsScreen extends StatelessWidget {
             title: 'Academic Years',
             subtitle: 'Define academic year periods',
             breadcrumbs: const ['Home', 'Settings', 'Academic Years'],
-            actions: [AppButton(label: 'Add Year', icon: Icons.add_rounded, onPressed: () {})],
+            actions: [AppButton(label: 'Add Year', icon: Icons.add_rounded, onPressed: () => AppFormSheet.show(
+              context,
+              title: 'Add Academic Year',
+              subtitle: 'Define a new academic year period',
+              submitLabel: 'Create Year',
+              submitIcon: Icons.add_rounded,
+              fields: [
+                TextField(decoration: const InputDecoration(labelText: 'Year Label', hintText: 'e.g. 2025-26')),
+                TextField(decoration: const InputDecoration(labelText: 'Start Date', hintText: 'e.g. Sep 1, 2025')),
+                TextField(decoration: const InputDecoration(labelText: 'End Date', hintText: 'e.g. Aug 31, 2026')),
+                TextField(decoration: const InputDecoration(labelText: 'Number of Sessions', hintText: 'e.g. 2'), keyboardType: TextInputType.number),
+              ],
+            ))],
           ),
           AppDataTable(
             columns: columns,

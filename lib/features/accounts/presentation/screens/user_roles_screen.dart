@@ -25,7 +25,27 @@ class UserRolesScreen extends StatelessWidget {
       padding: AppSpacing.pagePadding,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         PageHeader(title: 'User-Role Assignments', subtitle: 'Map users to roles with college-level scoping', breadcrumbs: const ['Home', 'Accounts', 'User Roles'],
-          actions: [AppButton(label: 'Assign Role', icon: Icons.add_rounded, onPressed: () {})]),
+          actions: [AppButton(label: 'Assign Role', icon: Icons.add_rounded, onPressed: () => AppFormSheet.show(
+            context,
+            title: 'Assign Role',
+            subtitle: 'Map a user to a role with college scoping',
+            submitLabel: 'Assign Role',
+            submitIcon: Icons.add_rounded,
+            fields: [
+              TextField(decoration: const InputDecoration(labelText: 'User', hintText: 'Search user by name')),
+              DropdownButtonFormField<String>(
+                decoration: const InputDecoration(labelText: 'Role'),
+                items: ['Super Admin', 'College Admin', 'Teacher', 'Student', 'Staff'].map((r) => DropdownMenuItem(value: r, child: Text(r))).toList(),
+                onChanged: (_) {},
+              ),
+              DropdownButtonFormField<String>(
+                decoration: const InputDecoration(labelText: 'College'),
+                items: ['Engineering', 'Medicine', 'Business', 'Law'].map((c) => DropdownMenuItem(value: c, child: Text(c))).toList(),
+                onChanged: (_) {},
+              ),
+              SwitchListTile(title: const Text('Primary Role'), value: false, onChanged: (_) {}, contentPadding: EdgeInsets.zero),
+            ],
+          ))]),
         AppDataTable(
           columns: columns,
           rows: assignments.map((a) => [

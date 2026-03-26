@@ -31,7 +31,30 @@ class PayrollsScreen extends StatelessWidget {
             title: 'Payrolls',
             subtitle: 'Generate and process monthly payrolls',
             breadcrumbs: const ['Home', 'HR', 'Payrolls'],
-            actions: [AppButton(label: 'Generate Payroll', icon: Icons.add_rounded, onPressed: () {})],
+            actions: [AppButton(label: 'Generate Payroll', icon: Icons.add_rounded, onPressed: () => AppFormSheet.show(
+              context,
+              title: 'Generate Payroll',
+              subtitle: 'Generate monthly payroll for employees',
+              submitLabel: 'Generate Payroll',
+              submitIcon: Icons.play_arrow_rounded,
+              fields: [
+                DropdownButtonFormField<String>(
+                  decoration: const InputDecoration(labelText: 'Month'),
+                  items: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map((m) => DropdownMenuItem(value: m, child: Text(m))).toList(),
+                  onChanged: (_) {},
+                ),
+                DropdownButtonFormField<String>(
+                  decoration: const InputDecoration(labelText: 'Year'),
+                  items: ['2024', '2025', '2026'].map((y) => DropdownMenuItem(value: y, child: Text(y))).toList(),
+                  onChanged: (_) {},
+                ),
+                DropdownButtonFormField<String>(
+                  decoration: const InputDecoration(labelText: 'College'),
+                  items: ['All', 'Engineering', 'Medicine'].map((c) => DropdownMenuItem(value: c, child: Text(c))).toList(),
+                  onChanged: (_) {},
+                ),
+              ],
+            ))],
           ),
           AppDataTable(
             columns: columns,

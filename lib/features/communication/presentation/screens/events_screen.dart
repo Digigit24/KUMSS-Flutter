@@ -23,7 +23,25 @@ class EventsScreen extends StatelessWidget {
             title: 'Events',
             subtitle: 'Create and manage events',
             breadcrumbs: const ['Home', 'Communication', 'Events'],
-            actions: [AppButton(label: 'Create Event', icon: Icons.add_rounded, onPressed: () {})],
+            actions: [AppButton(label: 'Create Event', icon: Icons.add_rounded, onPressed: () => AppFormSheet.show(
+              context,
+              title: 'Create Event',
+              subtitle: 'Schedule a new event',
+              submitLabel: 'Create Event',
+              submitIcon: Icons.add_rounded,
+              fields: [
+                TextField(decoration: const InputDecoration(labelText: 'Event Title', hintText: 'e.g. Annual Sports Day')),
+                TextField(decoration: const InputDecoration(labelText: 'Date', hintText: 'e.g. Apr 12, 2026')),
+                TextField(decoration: const InputDecoration(labelText: 'Time', hintText: 'e.g. 2:00 PM')),
+                TextField(decoration: const InputDecoration(labelText: 'Venue', hintText: 'e.g. Main Auditorium')),
+                DropdownButtonFormField<String>(
+                  decoration: const InputDecoration(labelText: 'College'),
+                  items: ['All Colleges', 'Engineering', 'Medicine', 'Business'].map((c) => DropdownMenuItem(value: c, child: Text(c))).toList(),
+                  onChanged: (_) {},
+                ),
+                TextField(maxLines: 3, decoration: const InputDecoration(labelText: 'Description', hintText: 'Describe the event', alignLabelWithHint: true)),
+              ],
+            ))],
           ),
           GridView.builder(
             shrinkWrap: true,

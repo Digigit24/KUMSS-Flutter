@@ -30,7 +30,18 @@ class CollegesScreen extends StatelessWidget {
             title: 'College Management',
             subtitle: 'Manage all colleges in the institution',
             breadcrumbs: const ['Home', 'Core', 'Colleges'],
-            actions: [AppButton(label: 'Add College', icon: Icons.add_rounded, onPressed: () => _showCollegeDialog(context))],
+            actions: [AppButton(label: 'Add College', icon: Icons.add_rounded, onPressed: () => AppFormSheet.show(
+              context,
+              title: 'Add College',
+              subtitle: 'Create a new college in the institution',
+              submitLabel: 'Create College',
+              submitIcon: Icons.add_rounded,
+              fields: [
+                TextField(decoration: const InputDecoration(labelText: 'College Name', hintText: 'e.g. College of Engineering')),
+                TextField(decoration: const InputDecoration(labelText: 'College Code', hintText: 'e.g. COE')),
+                TextField(decoration: const InputDecoration(labelText: 'Short Name', hintText: 'e.g. Engineering')),
+              ],
+            ))],
           ),
           ResponsiveGrid(
             children: [
@@ -62,20 +73,4 @@ class CollegesScreen extends StatelessWidget {
     );
   }
 
-  void _showCollegeDialog(BuildContext context) {
-    showDialog(context: context, builder: (_) => AlertDialog(
-      title: const Text('Add New College'),
-      content: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 400), child: Column(mainAxisSize: MainAxisSize.min, children: [
-        TextField(decoration: const InputDecoration(labelText: 'College Name', hintText: 'e.g. College of Engineering')),
-        const SizedBox(height: 16),
-        TextField(decoration: const InputDecoration(labelText: 'College Code', hintText: 'e.g. COE')),
-        const SizedBox(height: 16),
-        TextField(decoration: const InputDecoration(labelText: 'Short Name', hintText: 'e.g. Engineering')),
-      ])),
-      actions: [
-        OutlinedButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
-        ElevatedButton(onPressed: () => Navigator.pop(context), child: const Text('Create')),
-      ],
-    ));
-  }
 }

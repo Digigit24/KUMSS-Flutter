@@ -33,7 +33,29 @@ class InventoryScreen extends StatelessWidget {
             breadcrumbs: const ['Home', 'Store', 'Inventory'],
             actions: [
               AppButton(label: 'Export', icon: Icons.download_rounded, variant: AppButtonVariant.outlined, onPressed: () {}),
-              AppButton(label: 'Add Item', icon: Icons.add_rounded, onPressed: () {}),
+              AppButton(label: 'Add Item', icon: Icons.add_rounded, onPressed: () => AppFormSheet.show(
+                context,
+                title: 'Add Item',
+                subtitle: 'Add a new inventory item',
+                submitLabel: 'Add Item',
+                submitIcon: Icons.add_rounded,
+                fields: [
+                  TextField(decoration: const InputDecoration(labelText: 'Item Name', hintText: 'e.g. Dell Optiplex 7090')),
+                  DropdownButtonFormField<String>(
+                    decoration: const InputDecoration(labelText: 'Category'),
+                    items: ['Electronics', 'Lab Supplies', 'Furniture', 'Stationery', 'Sports Equipment'].map((c) => DropdownMenuItem(value: c, child: Text(c))).toList(),
+                    onChanged: (_) {},
+                  ),
+                  DropdownButtonFormField<String>(
+                    decoration: const InputDecoration(labelText: 'Store'),
+                    items: ['Central', 'Engineering', 'Medicine', 'Library'].map((s) => DropdownMenuItem(value: s, child: Text(s))).toList(),
+                    onChanged: (_) {},
+                  ),
+                  TextField(decoration: const InputDecoration(labelText: 'Quantity', hintText: 'e.g. 10'), keyboardType: TextInputType.number),
+                  TextField(decoration: const InputDecoration(labelText: 'Min Quantity', hintText: 'e.g. 5'), keyboardType: TextInputType.number),
+                  TextField(decoration: const InputDecoration(labelText: 'Unit Price', hintText: 'e.g. 55000'), keyboardType: TextInputType.number),
+                ],
+              )),
             ],
           ),
           AppDataTable(
