@@ -63,6 +63,7 @@ class AppHeader extends StatelessWidget {
   }
 
   Widget _buildCollegeSelector(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < AppSpacing.mobileBreakpoint;
     return BlocBuilder<CollegeSelectorBloc, CollegeSelectorState>(
       builder: (context, state) {
         return Container(
