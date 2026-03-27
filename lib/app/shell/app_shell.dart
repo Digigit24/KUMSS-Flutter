@@ -125,14 +125,17 @@ class _AppShellState extends State<AppShell> {
           },
         ),
       ),
-      body: Column(
-        children: [
-          AppHeader(
-            user: user,
-            onMenuTap: () => _scaffoldKey.currentState?.openDrawer(),
-          ),
-          Expanded(child: widget.child),
-        ],
+      body: SafeArea(
+        bottom: false,
+        child: Column(
+          children: [
+            AppHeader(
+              user: user,
+              onMenuTap: () => _scaffoldKey.currentState?.openDrawer(),
+            ),
+            Expanded(child: widget.child),
+          ],
+        ),
       ),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
