@@ -177,20 +177,22 @@ class _AppSidebarState extends State<AppSidebar> {
       decoration: const BoxDecoration(
         gradient: AppColors.sidebarGradient,
       ),
-      child: Column(
-        children: [
-          _buildLogo(),
-          const SizedBox(height: 8),
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-              children: SidebarNav.items
-                  .map((item) => _buildNavItem(item))
-                  .toList(),
+      child: SafeArea(
+        child: Column(
+          children: [
+            _buildLogo(),
+            const SizedBox(height: 8),
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                children: SidebarNav.items
+                    .map((item) => _buildNavItem(item))
+                    .toList(),
+              ),
             ),
-          ),
-          _buildCollapseButton(),
-        ],
+            _buildCollapseButton(),
+          ],
+        ),
       ),
     );
   }

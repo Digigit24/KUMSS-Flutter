@@ -27,7 +27,7 @@ class ResponsiveGrid extends StatelessWidget {
       crossAxisCount: columns,
       crossAxisSpacing: spacing,
       mainAxisSpacing: spacing,
-      childAspectRatio: isMobile ? 1.6 : 2.2,
+      childAspectRatio: isMobile ? 1.7 : 2.4,
       children: children,
     );
   }

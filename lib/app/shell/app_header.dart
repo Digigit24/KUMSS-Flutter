@@ -114,22 +114,22 @@ class AppHeader extends StatelessWidget {
               )),
             ],
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
               decoration: BoxDecoration(
                 color: AppColors.surfaceVariant,
-                borderRadius: AppSpacing.borderRadiusMd,
+                borderRadius: AppSpacing.borderRadiusSm,
                 border: Border.all(color: AppColors.border),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.apartment_rounded, size: 16, color: AppColors.accent),
-                  const SizedBox(width: 6),
+                  Icon(Icons.apartment_rounded, size: 14, color: AppColors.accent),
+                  const SizedBox(width: 4),
                   ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 120),
+                    constraints: BoxConstraints(maxWidth: isMobile ? 80 : 120),
                     child: Text(
                       state.displayName,
-                      style: AppTypography.labelMedium.copyWith(color: AppColors.textPrimary, fontWeight: FontWeight.w500),
+                      style: AppTypography.caption.copyWith(color: AppColors.textPrimary, fontWeight: FontWeight.w500),
                       maxLines: 1, overflow: TextOverflow.ellipsis,
                     ),
                   ),
