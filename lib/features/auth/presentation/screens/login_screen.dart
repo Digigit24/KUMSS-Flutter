@@ -139,11 +139,12 @@ class _LoginScreenState extends State<LoginScreen>
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           validator: (v) {
-                            if (v == null || v.isEmpty) return 'Email is required';
-                            if (!v.contains('@')) return 'Enter a valid email';
+                            if (v == null || v.trim().isEmpty) {
+                              return 'Username is required';
+                            }
                             return null;
                           },
-                          decoration: const InputDecoration(hintText: 'Enter your email', prefixIcon: Icon(Icons.email_outlined, size: 20)),
+                          decoration: const InputDecoration(hintText: 'Enter your username', prefixIcon: Icon(Icons.email_outlined, size: 20)),
                         ),
                         const SizedBox(height: 20),
                         Text('Password', style: AppTypography.labelLarge),

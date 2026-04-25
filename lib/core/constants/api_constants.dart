@@ -2,10 +2,10 @@
 class ApiConstants {
   ApiConstants._();
 
-  static const String baseUrl = 'https://api.kumss.edu.et/api/v1';
+  static const String baseUrl = 'https://kumsst.celiyo.com/api/v1';
 
   // ─── Auth ──────────────────────────────────────────────────
-  static const String login = '/auth/login';
+  static const String login = '/auth/login/';
   static const String logout = '/auth/logout';
   static const String refreshToken = '/auth/refresh';
   static const String profile = '/auth/profile';

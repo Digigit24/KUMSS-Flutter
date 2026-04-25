@@ -1,18 +1,29 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:dio/dio.dart';
+
+import '../../../../core/constants/api_constants.dart';
+import '../../../../core/network/api_client.dart';
+import '../../../../core/storage/local_storage.dart';
 import '../../data/models/user_model.dart';
 
-// ─── Events ────────────────────────────────────────────────
+/// EVENTS
 abstract class AuthEvent extends Equatable {
   const AuthEvent();
+
   @override
   List<Object?> get props => [];
 }
 
 class AuthLoginRequested extends AuthEvent {
-  final String email;
+  final String email; // using field name from UI
   final String password;
-  const AuthLoginRequested({required this.email, required this.password});
+
+  const AuthLoginRequested({
+    required this.email,
+    required this.password,
+  });
+
   @override
   List<Object?> get props => [email, password];
 }
@@ -24,10 +35,10 @@ class AuthLogoutRequested extends AuthEvent {
 class AuthCheckRequested extends AuthEvent {
   const AuthCheckRequested();
 }
-
-// ─── States ────────────────────────────────────────────────
+/// STATES
 abstract class AuthState extends Equatable {
   const AuthState();
+
   @override
   List<Object?> get props => [];
 }
@@ -38,7 +49,9 @@ class AuthLoading extends AuthState {}
 
 class AuthAuthenticated extends AuthState {
   final UserModel user;
+
   const AuthAuthenticated({required this.user});
+
   @override
   List<Object?> get props => [user];
 }
@@ -47,13 +60,17 @@ class AuthUnauthenticated extends AuthState {}
 
 class AuthError extends AuthState {
   final String message;
+
   const AuthError({required this.message});
+
   @override
   List<Object?> get props => [message];
 }
 
-// ─── Bloc ──────────────────────────────────────────────────
+/// BLOC
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
+  final Dio dio = Dio();
+
   AuthBloc() : super(AuthInitial()) {
     on<AuthLoginRequested>(_onLogin);
     on<AuthLogoutRequested>(_onLogout);
@@ -61,29 +78,56 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onLogin(
-      AuthLoginRequested event, Emitter<AuthState> emit) async {
+      AuthLoginRequested event,
+      Emitter<AuthState> emit,
+      ) async {
     emit(AuthLoading());
-    try {
-      // Simulate API call — replace with real API integration
-      await Future.delayed(const Duration(seconds: 1));
 
-      // Accept any non-empty credentials for demo
-      emit(AuthAuthenticated(user: UserModel.demoSuperAdmin));
+    try {
+      final response = await dio.post(
+        '${ApiConstants.baseUrl}${ApiConstants.login}',
+        data: {
+          "username": event.email.trim(),
+          "password": event.password.trim(),
+        },
+        options: Options(
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+          },
+        ),
+      );
+
+      final data = response.data;
+
+      final access = data["access"];
+      final refresh = data["refresh"];
+
+      if (access == null) {
+        emit(const AuthError(message: "Login failed"));
+        return;
+      }
+
+      // Optional token save later
+      final user = UserModel.demoSuperAdmin;
+
+      emit(AuthAuthenticated(user: user));
     } catch (e) {
-      emit(AuthError(message: e.toString()));
+      emit(AuthError(message: "Login Error: $e"));
     }
   }
 
   Future<void> _onLogout(
-      AuthLogoutRequested event, Emitter<AuthState> emit) async {
+      AuthLogoutRequested event,
+      Emitter<AuthState> emit,
+      ) async {
     emit(AuthUnauthenticated());
   }
 
   Future<void> _onCheck(
-      AuthCheckRequested event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
-    // Show login screen — user must click Sign In
-    await Future.delayed(const Duration(milliseconds: 300));
+      AuthCheckRequested event,
+      Emitter<AuthState> emit,
+      ) async {
     emit(AuthUnauthenticated());
   }
 }
